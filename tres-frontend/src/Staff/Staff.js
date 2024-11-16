@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
+import { Box, TextField, Button } from '@mui/material';
 
 const Staff = ({ staffData, setStaffData }) => {
   const [staffDetails, setStaffDetails] = useState({
@@ -125,50 +126,52 @@ const Staff = ({ staffData, setStaffData }) => {
     <div className="container">
       <h1>STAFF</h1>
       <form onSubmit={handleCreateStaff}>
-        <input
-          type="text"
-          id="staffId"
-          name="staffId"
-          placeholder="Staff ID"
-          value={staffDetails.staffId}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          id="name"
-          name="name"
-          placeholder="Name"
-          value={staffDetails.name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          id="role"
-          name="role"
-          placeholder="Role"
-          value={staffDetails.role}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          id="contactNumber"
-          name="contactNumber"
-          placeholder="Contact Number"
-          value={staffDetails.contactNumber}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          id="schedule"
-          name="schedule"
-          placeholder="Schedule"
-          value={staffDetails.schedule}
-          onChange={handleChange}
-          required
-        />
+        <Box spacing={2} display="flex" flexDirection="column">
+          <TextField
+            type="text"
+            id="staffId"
+            name="staffId"
+            placeholder="Staff ID"
+            value={staffDetails.staffId}
+            onChange={handleChange}
+          />
+          <TextField
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Name"
+            value={staffDetails.name}
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            type="text"
+            id="role"
+            name="role"
+            placeholder="Role"
+            value={staffDetails.role}
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            type="text"
+            id="contactNumber"
+            name="contactNumber"
+            placeholder="Contact Number"
+            value={staffDetails.contactNumber}
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            type="text"
+            id="schedule"
+            name="schedule"
+            placeholder="Schedule"
+            value={staffDetails.schedule}
+            onChange={handleChange}
+            required
+          />
+        </Box>
         <button type="submit">Create Staff</button>
         <button type="button" onClick={handleViewStaff}>View Staff List</button>
         <button type="button" onClick={handleUpdateStaff}>Update Staff</button>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
+import { Box, TextField, Button, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 
 const Payment = ({ paymentData, setPaymentData }) => {
   const [paymentDetails, setPaymentDetails] = useState({
@@ -146,56 +147,64 @@ const Payment = ({ paymentData, setPaymentData }) => {
     <div className="container">
       <h1>PAYMENT</h1>
       <form onSubmit={handleCreatePayment}>
-        <input
-          type="text"
-          id="Payment_ID"
-          name="Payment_ID"
-          placeholder="Payment ID"
-          value={paymentDetails.Payment_ID}
-          onChange={handleChange}
-        />
-        <select
-          id="Payment_Method"
-          name="Payment_Method"
-          value={paymentDetails.Payment_Method}
-          onChange={handleChange}
-          required
-        >
-          <option value="" disabled>Select Payment Method</option>
-          <option value="GCASH">GCASH</option>
-          <option value="Paypal">Paypal</option>
-          <option value="Credit Card">Credit Card</option>
-        </select>
-        <input
-          type="date"
-          id="Payment_Date"
-          name="Payment_Date"
-          value={paymentDetails.Payment_Date}
-          onChange={handleChange}
-          required
-        />
-        <select
-          id="Payment_Status"
-          name="Payment_Status"
-          value={paymentDetails.Payment_Status}
-          onChange={handleChange}
-          required
-        >
-          <option value="" disabled>Select Payment Status</option>
-          <option value="Pending">Pending</option>
-          <option value="Completed">Completed</option>
-          <option value="Failed">Failed</option>
-          <option value="Refunded">Refunded</option>
-        </select>
-        <input
-          type="text"
-          id="Amount"
-          name="Amount"
-          placeholder="Amount"
-          value={paymentDetails.Amount}
-          onChange={handleChange}
-          required
-        />
+        <Box spacing={2} display="flex" flexDirection="column">
+          <TextField
+            type="text"
+            id="Payment_ID"
+            name="Payment_ID"
+            placeholder="Payment ID"
+            value={paymentDetails.Payment_ID}
+            onChange={handleChange}
+          />
+          <FormControl variant="outlined" fullWidth margin="normal">
+            <InputLabel>Select Payment Method</InputLabel>
+            <Select
+              id="Payment_Method"
+              name="Payment_Method"
+              value={paymentDetails.Payment_Method}
+              onChange={handleChange}
+              required
+            >
+              <MenuItem value="" disabled>Select Payment Method</MenuItem>
+              <MenuItem value="GCASH">GCASH</MenuItem>
+              <MenuItem value="Paypal">Paypal</MenuItem>
+              <MenuItem value="Credit Card">Credit Card</MenuItem>
+            </Select>
+          </FormControl>
+          <TextField
+            type="date"
+            id="Payment_Date"
+            name="Payment_Date"
+            value={paymentDetails.Payment_Date}
+            onChange={handleChange}
+            required
+          />
+          <FormControl variant="outlined" fullWidth margin="normal">
+            <InputLabel>Select Payment Status</InputLabel>
+            <Select
+              id="Payment_Status"
+              name="Payment_Status"
+              value={paymentDetails.Payment_Status}
+              onChange={handleChange}
+              required
+            >
+              <MenuItem value="" disabled>Select Payment Status</MenuItem>
+              <MenuItem value="Pending">Pending</MenuItem>
+              <MenuItem value="Completed">Completed</MenuItem>
+              <MenuItem value="Failed">Failed</MenuItem>
+              <MenuItem value="Refunded">Refunded</MenuItem>
+            </Select>
+          </FormControl>
+          <TextField
+            type="text"
+            id="Amount"
+            name="Amount"
+            placeholder="Amount"
+            value={paymentDetails.Amount}
+            onChange={handleChange}
+            required
+          />
+        </Box>
         <button type="submit">Create Payment</button>
         <button type="button" onClick={handleViewPayment}>View Payment Details</button>
         <button type="button" onClick={handleUpdatePayment}>Update Payment</button>

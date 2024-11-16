@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
-import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 
-const Payment = () => {
+const Payment = ({ paymentData, setPaymentData }) => {
   const [paymentDetails, setPaymentDetails] = useState({
     Payment_ID: '',
     Payment_Method: '',
@@ -13,7 +12,6 @@ const Payment = () => {
     Amount: ''
   });
   const [loading, setLoading] = useState(false);
-  const [paymentData, setPaymentData] = useState([]); // Updated to store list of payments
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,51 +32,99 @@ const Payment = () => {
 
   const handleCreatePayment = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    console.log('Creating payment with details:', paymentDetails); // Log payment details
     try {
-      const response = await axios.post('http://localhost:8080/insertPayment', paymentDetails);
-      console.log('Payment created successfully:', response.data);
+      const response = await fetch('http://localhost:8080/api/payments/postPayment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          paymentId: paymentDetails.Payment_ID,
+          amount: paymentDetails.Amount,
+          paymentDate: paymentDetails.Payment_Date,
+          paymentMethod: paymentDetails.Payment_Method,
+          status: paymentDetails.Payment_Status
+        })
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      console.log('Payment created successfully:', data);
       alert('Payment created successfully!');
-      navigate('/payment');
+      setPaymentData((prevData) => [...prevData, data]);
+      navigate('/payment-list');
     } catch (error) {
-      console.error('Error creating payment:', error.response ? error.response.data : error.message);
+      console.error('Error creating payment:', error.message); // Log full error message
       alert('Error creating payment. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
-  
 
   const handleViewPayment = async () => {
     setLoading(true);
     try {
-        const response = await axios.get('http://localhost:8080/getPayment');
-        setPaymentData(response.data);
-        navigate('/payment-list'); // Navigate to PaymentList view after fetching data
+      const response = await axios.get('http://localhost:8080/api/payments/getPayment');
+      setPaymentData(response.data);
+      //navigate('/payment-list'); 
     } catch (error) {
-        console.error('Failed to load payment data:', error.response ? error.response.data : error.message);
+      console.error('Failed to load payment data:', error.response ? error.response.data : error.message);
+      alert('Failed to load payment data. Please try again.');
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-};
-
-  
+  };
 
   const handleUpdatePayment = async (e) => {
     e.preventDefault();
     const paymentId = paymentDetails.Payment_ID;
+    setLoading(true);
+    console.log('Updating payment with details:', paymentDetails); // Log payment details
     try {
-      const response = await axios.put(`http://localhost:8080/updatePayment/${paymentId}`, paymentDetails); // Updated endpoint
-      console.log('Payment updated successfully:', response.data);
+      const response = await fetch(`http://localhost:8080/api/payments/putPayment/${paymentId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          paymentId: paymentDetails.Payment_ID,
+          amount: paymentDetails.Amount,
+          paymentDate: paymentDetails.Payment_Date,
+          paymentMethod: paymentDetails.Payment_Method,
+          status: paymentDetails.Payment_Status
+        })
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      console.log('Payment updated successfully:', data);
       alert('Payment updated successfully!');
+      setPaymentData((prevData) => prevData.map(payment => payment.paymentId === paymentId ? data : payment));
       navigate('/payment-list');
     } catch (error) {
-      console.error('Error updating payment:', error);
+      console.error('Error updating payment:', error.message); // Log full error message
       alert('Error updating payment. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleDeletePayment = async () => {
     const paymentId = paymentDetails.Payment_ID;
+    setLoading(true);
+    console.log('Deleting payment with ID:', paymentId); // Log payment ID
     try {
-      await axios.delete(`http://localhost:8080/deletePayment/${paymentId}`); // Updated endpoint
+      const response = await fetch(`http://localhost:8080/api/payments/deletePayment/${paymentId}`, {
+        method: 'DELETE'
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      console.log('Payment deleted successfully');
       alert('Payment deleted successfully!');
       setPaymentDetails({
         Payment_ID: '',
@@ -87,88 +133,69 @@ const Payment = () => {
         Payment_Status: '',
         Amount: ''
       });
-      setPaymentData(paymentData.filter(payment => payment.Payment_ID !== paymentId)); // Update paymentData state
+      setPaymentData((prevData) => prevData.filter(payment => payment.paymentId !== paymentId));
     } catch (error) {
-      console.error('Error deleting payment:', error);
+      console.error('Error deleting payment:', error.message); // Log full error message
       alert('Error deleting payment. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
-  
 
   return (
     <div className="container">
       <h1>PAYMENT</h1>
       <form onSubmit={handleCreatePayment}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
-      <TextField
-        label="Payment ID"
-        id="Payment_ID"
-        name="Payment_ID"
-        value={paymentDetails.Payment_ID}
-        onChange={handleChange}
-        fullWidth
-      />
-      <FormControl variant="outlined" fullWidth margin="normal">
-        <InputLabel id="Payment_Method_Label">Payment Method</InputLabel>
-        <Select
-          label="Payment Method"
+        <input
+          type="text"
+          id="Payment_ID"
+          name="Payment_ID"
+          placeholder="Payment ID"
+          value={paymentDetails.Payment_ID}
+          onChange={handleChange}
+        />
+        <select
+          id="Payment_Method"
+          name="Payment_Method"
           value={paymentDetails.Payment_Method}
           onChange={handleChange}
           required
-          MenuProps={{
-            PaperProps: {
-                sx: {
-                    textAlign: 'left', // Ensure options are left-aligned
-                },
-            },
-        }}
-        sx={{ textAlign: 'left' }}
         >
-          <MenuItem value="" disabled>Select Payment Method</MenuItem>
-          <MenuItem value="GCASH">GCASH</MenuItem>
-          <MenuItem value="Paypal">Paypal</MenuItem>
-          <MenuItem value="Credit Card">Credit Card</MenuItem>
-        </Select>
-      </FormControl>
-      <TextField
-        label="Payment Date"
-        type="date"
-        id="Payment_Date"
-        name="Payment_Date"
-        value={paymentDetails.Payment_Date}
-        onChange={handleChange}
-        InputLabelProps={{ shrink: true }}
-        fullWidth
-        required
-      />
-      <FormControl fullWidth>
-        <InputLabel id="Payment_Status_Label">Payment Status</InputLabel>
-        <Select
-          label="PaymentStatus"
+          <option value="" disabled>Select Payment Method</option>
+          <option value="GCASH">GCASH</option>
+          <option value="Paypal">Paypal</option>
+          <option value="Credit Card">Credit Card</option>
+        </select>
+        <input
+          type="date"
+          id="Payment_Date"
+          name="Payment_Date"
+          value={paymentDetails.Payment_Date}
+          onChange={handleChange}
+          required
+        />
+        <select
           id="Payment_Status"
-
+          name="Payment_Status"
           value={paymentDetails.Payment_Status}
           onChange={handleChange}
           required
         >
-          <MenuItem value="" disabled>Select Payment Status</MenuItem>
-          <MenuItem value="Pending">Pending</MenuItem>
-          <MenuItem value="Completed">Completed</MenuItem>
-          <MenuItem value="Failed">Failed</MenuItem>
-          <MenuItem value="Refunded">Refunded</MenuItem>
-        </Select>
-      </FormControl>
-      <TextField
-        label="Amount"
-        id="Amount"
-        name="Amount"
-        placeholder="Amount"
-        value={paymentDetails.Amount}
-        onChange={handleChange}
-        fullWidth
-        required
-      />
-    </Box>
+          <option value="" disabled>Select Payment Status</option>
+          <option value="Pending">Pending</option>
+          <option value="Completed">Completed</option>
+          <option value="Failed">Failed</option>
+          <option value="Refunded">Refunded</option>
+        </select>
+        <input
+          type="text"
+          id="Amount"
+          name="Amount"
+          placeholder="Amount"
+          value={paymentDetails.Amount}
+          onChange={handleChange}
+          required
+        />
         <button type="submit">Create Payment</button>
         <button type="button" onClick={handleViewPayment}>View Payment Details</button>
         <button type="button" onClick={handleUpdatePayment}>Update Payment</button>
@@ -177,21 +204,28 @@ const Payment = () => {
 
       {loading && <p>Loading...</p>}
 
-      {paymentData.length > 0 && (
-        <div className="payment-details">
-          <h2>Payment Details</h2>
-          {paymentData.map(payment => (
-            <div key={payment.Payment_ID}>
-              <p>Payment ID: {payment.Payment_ID}</p>
-              <p>Payment Method: {payment.Payment_Method}</p>
-              <p>Payment Date: {payment.Payment_Date}</p>
-              <p>Payment Status: {payment.Payment_Status}</p>
-              <p>Amount: {payment.Amount}</p>
-              <hr />
-            </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Payment ID</th>
+            <th>Payment Method</th>
+            <th>Payment Date</th>
+            <th>Payment Status</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {paymentData.map((payment) => (
+            <tr key={payment.paymentId}>
+              <td>{payment.paymentId}</td>
+              <td>{payment.paymentMethod}</td>
+              <td>{payment.paymentDate}</td>
+              <td>{payment.status}</td>
+              <td>{payment.amount}</td>
+            </tr>
           ))}
-        </div>
-      )}
+        </tbody>
+      </table>
     </div>
   );
 };

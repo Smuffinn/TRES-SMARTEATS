@@ -1,6 +1,5 @@
 package com.g4appdev.TES.Payment;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,11 +31,7 @@ public class PaymentService {
     }
 
     public String deletePayment(Long id) {
-        if (paymentRepository.existsById(id)) {
-            paymentRepository.deleteById(id);
-            return "Payment deleted successfully.";
-        } else {
-            return "Payment not found.";
-        }
+        paymentRepository.deleteById(id);
+        return "Payment deleted successfully";
     }
 }

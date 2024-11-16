@@ -1,52 +1,46 @@
 // PaymentList.js
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-import './App.css';
+import './PaymentList.css';
 
 const PaymentList = () => {
   const [payments, setPayments] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
-    const fetchPayments = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/getPayment'); // Ensure correct endpoint
-        setPayments(response.data);
-      } catch (error) {
-        console.error('Error fetching payments:', error);
-      }
-    };
-    
-
-    fetchPayments();
-  }, []);
+    if (location.state && location.state.payments) {
+      setPayments(location.state.payments);
+    } else {
+      const fetchPayments = async () => {
+        try {
+          const response = await axios.get('http://localhost:8080/api/payments/getPayment'); // Ensure correct endpoint
+          setPayments(response.data);
+        } catch (error) {
+          console.error('Error fetching payments:', error);
+        }
+      };
+      fetchPayments();
+    }
+  }, [location.state]);
 
   return (
     <div className="payment-list-container">
       <h1>Payment List</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Payment ID</th>
-            <th>Account Number</th>
-            <th>Payment Method</th>
-            <th>Payment Date</th>
-            <th>Payment Status</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
-        <tbody>
-          {payments.map((payment) => (
-            <tr key={payment.Payment_ID}>
-              <td>{payment.Payment_ID}</td>
-              <td>{payment.Account_Number}</td>
-              <td>{payment.Payment_Method}</td>
-              <td>{payment.Payment_Date}</td>
-              <td>{payment.Payment_Status}</td>
-              <td>{payment.Amount}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {payments.length > 0 ? (
+        payments.map(payment => (
+          <div key={payment.paymentId} className="payment-item">
+            <p>Payment ID: {payment.paymentId}</p>
+            <p>Payment Method: {payment.paymentMethod}</p>
+            <p>Payment Date: {payment.paymentDate}</p>
+            <p>Payment Status: {payment.status}</p>
+            <p>Amount: {payment.amount}</p>
+            <hr />
+          </div>
+        ))
+      ) : (
+        <p>No payments found.</p>
+      )}
     </div>
   );
 };

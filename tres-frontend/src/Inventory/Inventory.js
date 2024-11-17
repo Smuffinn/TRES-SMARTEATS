@@ -48,6 +48,7 @@ const Inventory = () => {
     };
     const navigateToInventoryTable = () => {
         navigate('/inventory-table'); // Navigate to InventoryTable component
+        navigate('/Inventory/inventory-table'); // Navigate to InventoryTable component
     };
 
     return (
@@ -55,34 +56,42 @@ const Inventory = () => {
             <h1>INVENTORY</h1>
             <form onSubmit={addInventory}>
             
+            <TextField
+                type="text"
+                label="Stock Quantity"
+                variant="outlined"
+                value={newInventory.stock_quantity}
+                onChange={(e) => {
+                    const value = e.target.value;
+                    if (/^\d*$/.test(value)) {
+                        setNewInventory({ ...newInventory, stock_quantity: value });
+                    }
+                }}
+                sx={{ marginBottom: 2 }}  // Adding space below the TextField
+            />
+
+            <TextField
+                type="date"
+                // label="Restock Date"
+                value={newInventory.restock_date}
+                onChange={(e) => setNewInventory({ ...newInventory, restock_date: e.target.value })}
+                sx={{ marginBottom: 2 }}  // Adding space below the TextField
+            />
+
+            <TextField
+                type="text"
+                label="Supplier"
+                variant="outlined"
+                value={newInventory.supplier}
+                onChange={(e) => setNewInventory({ ...newInventory, supplier: e.target.value })}
+                sx={{ marginBottom: 2 }}  // Adding space below the TextField
+            />
 
             <Box spacing={2} display="flex" flexDirection="column">
                 <TextField
                     type="text"
                     label="Stock Quantity"
                     variant="outlined"
-                    value={newInventory.stock_quantity}
-                    onChange={(e) => {
-                        const value = e.target.value;
-                        if (/^\d*$/.test(value)) {
-                            setNewInventory({ ...newInventory, stock_quantity: value });
-                        }
-                    }}
-                />
-                <TextField
-                    type="date"
-                    // label="Restock Date"
-                    value={newInventory.restock_date}
-                    onChange={(e) => setNewInventory({ ...newInventory, restock_date: e.target.value })}
-                />
-                <TextField
-                    type="text"
-                    label="Supplier"
-                    variant="outlined"
-                    value={newInventory.supplier}
-                    onChange={(e) => setNewInventory({ ...newInventory, supplier: e.target.value })}
-                />
-            </Box>
 
                 <button type="submit">
                     {editingInventory ? 'Update Inventory' : 'Add Inventory'}

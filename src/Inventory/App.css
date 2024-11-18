@@ -1,0 +1,727 @@
+/* src/App.css */
+
+div nav {
+  background-color: MAROON;
+  padding: 10px;
+}
+nav {
+  background-color: #f8f8f8;
+  padding: 10px;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+nav li {
+  margin: 5px;
+}
+
+.button {
+  background-color: GOLD;
+  color: white;
+  font-weight: bold;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+
+.button.active {
+  color: gold;
+}
+
+
+.button:hover {
+  background-color: GOLD;
+}
+
+nav h1 {
+  text-align: center;
+  color: white;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 20px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+nav img {
+  margin-right: 10px;
+  width: 50px;
+  height: 50px;
+  vertical-align: middle;
+}
+
+.container {
+  max-width: 600px;
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  margin: 20px 0;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+h2, h1 {
+  text-align: center;
+  color: #333;
+}
+
+select {
+  width: 320px;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+
+input, form, button {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+
+button {
+  background-color: maroon;
+  color: white;
+  border: none;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: yellow;
+}
+
+ul, .menu-cards {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.menu-container {
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: AUTO;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: MAROON #f2f2f2;
+}
+
+.menu-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.menu-container::-webkit-scrollbar-track {
+  background: #f2f2f2;
+  border-radius: 8px;
+}
+
+.menu-container::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 8px;
+}
+
+.menu-container::-webkit-scrollbar-thumb:hover {
+  background: #eec124;
+}
+
+.menu-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  color: black;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.menu-card img {
+  width: 100%;
+  height: auto;
+  max-height: 150px;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .menu-card {
+      width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-card {
+      width: 100%;
+  }
+}
+
+.inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.inventory-table th,
+.inventory-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  color: black;
+  text-align: left;
+}
+
+.inventory-table th {
+  background-color: #f2f2f2;
+}
+
+.button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: maroon;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  color: white;
+}
+
+.button:hover {
+  background-color: #eec124;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.delete-button {
+  background-color: red;
+  color: white;
+  margin-left: 10px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: maroon;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #eec124;
+}
+
+.link {
+  margin-top: 10px;
+  font-size: 14px;
+  color: grey;
+}
+
+.link a {
+  color: maroon;
+  text-decoration: none;
+}
+
+.password-container {
+  display: flex;
+  align-items: center;
+}
+p{
+  color:black;
+}
+
+
+.password-container input {
+  flex: 1;
+  margin-right: 5px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.password-container button {
+  background-color: gold;
+  color: white;
+  border: none;
+  padding: 5px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.9em;
+  transition: background-color 0.3s;
+}
+
+.password-container button:hover {
+  background-color: maroon;
+}
+
+.title .logo {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.logo {
+  width: 500px;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.card {
+  background-color: #800000;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.card input {
+  background-color: white;
+  color: black;
+  border-radius: 8px;
+}
+
+.menu-card.selected {
+  border: 2px solid #4caf50;
+  background-color: #e8f5e9;
+}
+
+.menu-details-container {
+  padding: 20px;
+  background-color: white;
+  color: black;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.menu-item-details {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  text-align: center;
+}
+
+.menu-item-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.menu-item-info {
+  margin-top: 10px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.submit-button {
+  background-color: #FFD700;
+  color: #fff;
+  margin-top: 1rem;
+  font-weight: bold;
+  text-align: center;
+  width: 150px;
+}
+
+.submit-button:hover {
+  background-color: maroon;
+}
+
+.landing-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: maroon;
+}
+
+.landing-logo {
+  max-width: 80%;
+  height: auto;
+  cursor: pointer;
+}
+
+/* Navbar styling */
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: maroon;
+  position: relative;
+}
+
+/* Logo container */
+.logo-container {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.logo {
+  max-width: 500px;
+  height: auto;
+}
+
+.menu-icon {
+  font-size: 30px;
+  color: white;
+  width: 50px;
+  background-color: maroon;
+  padding: 5px 10px; /* Add padding for clickability */
+  border: none;
+  border-radius: 5px; /* Rounded corners for a nice look */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover effect to improve user feedback */
+.menu-icon:hover {
+  background-color: #eec124; /* Changes to gold on hover */
+}
+
+/* Menu overlay background */
+  .menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100px; /* Fixed width for better alignment */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center; /* Center items vertically */
+    padding: 20px;
+    transition: transform 0.3s ease; /* Smooth transition */
+    z-index: 9;
+  }
+
+  .menu-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Add spacing between menu options */
+  }
+
+  .menu-options .button {
+    color: white;
+    background-color: maroon;
+    padding: 10px;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: left; /* Align text to the left */
+    font-weight: bold;
+    transition: background-color 0.3s;
+    width: 100%;
+  }
+  .menu-options .button:hover {
+    background-color: #eec124;
+  }
+
+  .button.active {
+    color: gold;
+  }
+
+
+  .about-container {
+    padding: 2rem;
+    background-color: #fff;
+    color: #333;
+    text-align: center;
+    border-radius: 8px;
+    margin: 2rem auto;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .about-container h1 {
+    color: maroon;
+    margin-bottom: 1rem;
+  }
+  
+  .about-container p {
+    line-height: 1.6;
+    font-size: 1.1rem;
+  }
+
+  
+  .analytics-page {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .stock-overview {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .stock-overview h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .stock-overview ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .stock-overview li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  
+  .stock-status {
+    font-weight: bold;
+  }
+  
+  .stock-status.low {
+    color: red;
+  }
+  
+  .stock-status.ok {
+    color: green;
+  }
+  
+  .top-selling {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .top-selling h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .top-selling ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .top-selling li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  
+  .real-time-updates {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  .real-time-updates h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .real-time-updates div {
+    margin-bottom: 8px;
+  }
+  
+  .stock-summary {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .stock-summary h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .stock-summary ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .stock-summary li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  
+  .stock-alerts .alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+/* General Styling */
+.account-settings-page {
+  padding: 30px;
+  background-color: white;
+  color: white; /* White text */
+  border-radius: 10px;
+  max-width: 600px;
+  margin: 40px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  text-align: center;
+  color: black; /* Gold color */
+  font-size: 32px;
+  margin-bottom: 30px;
+  font-family: 'Arial', sans-serif;
+}
+
+.account-settings-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Label Styling */
+label {
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: block;
+  color: black; /* Gold color */
+  font-size: 18px;
+}
+
+/* Input and Textarea Styling */
+input, textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #FFD700; /* Gold border */
+  background-color: #f5f5f5;
+  color: #333;
+  transition: border 0.3s ease-in-out;
+}
+
+/* Input and Textarea Focus Effects */
+input:focus, textarea:focus {
+  outline: none;
+  border: 1px solid #FFD700;
+  background-color: #fff;
+}
+
+/* Textarea Specific Styling */
+textarea {
+  height: 120px;
+  resize: vertical;
+}
+
+/* Button Styling */
+.submit-btn {
+  background-color: #FFD700; /* Gold button */
+  color: #800000; /* Maroon text */
+  padding: 15px 25px;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: 'Arial', sans-serif;
+}
+
+.submit-btn:hover {
+  background-color: #ffcc00; /* Lighter gold for hover effect */
+}
+
+/* Adding responsive design */
+@media (max-width: 768px) {
+  .account-settings-page {
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
+
+  .submit-btn {
+    padding: 12px 20px;
+  }
+}

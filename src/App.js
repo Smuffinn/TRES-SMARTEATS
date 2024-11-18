@@ -14,6 +14,7 @@ import PaymentList from './Payment/PaymentList';
 import StaffList from './Staff/StaffList';
 import Student from './Student/Student';
 import Order from './Order/Order';
+import OrderList from './Order/OrderList';
 import StudentInfo from './Student/StudentInfo';
 import StudentList from './Student/StudentList';
 import Menu from './MenuItem/Menuu';
@@ -23,9 +24,8 @@ import logo1 from './white_background.png';
 import About from './AboutUs';
 import MenuItemAnalytics from './MenuItem/MenuitemAnalytics';
 import AccountSettings from './AccountSettings';
-import Feedback from './Feedback/Feedback';
-import FeedbackList from './Feedback/FeedbackList';
-// import { Button } from '@mui/material';
+import Feedback from '../tres-frontend/src/Feedback/Feedback';
+import FeedbackList from '../tres-frontend/src/Feedback/FeedbackList';
 
 const App = () => {
   const location = useLocation();
@@ -40,34 +40,33 @@ const App = () => {
   };
 
   return (
-<div style={{ backgroundColor: 'maroon', minHeight: '100vh', color: 'white' }}>
-    {!isLandingPage && (
-      <nav className="navbar">
-        <Link to="/home/home" className="logo-container">
-          <img src={logo1} alt="CITU - SMART EATS Logo" className="logo" />
-        </Link>
-        {/* <button className="menu-icon" onClick={toggleMenu}>
-          ☰
-        </button>
-        {isMenuOpen && (
-          <div className="menu-overlay">
-            <div className="menu-options"> */}
-              <Link to="/MenuItem/menuitem" className={`button ${isActive('/menuitem') ? 'active' : ''}`}>MENU ITEM</Link>
-              <Link to="/Inventory/inventory" className={`button ${isActive('/inventory') ? 'active' : ''}`}>INVENTORY</Link>
-              <Link to="/MenuItem/view-menu" className={`button ${isActive('/view-menu') ? 'active' : ''}`}>MENU</Link>
-              <Link to="/Payment/payment" className={`button ${isActive('/payment') ? 'active' : ''}`}>PAYMENT</Link>
-              <Link to="/Staff/staff" className={`button ${isActive('/staff') ? 'active' : ''}`}>STAFF</Link>
-              <Link to="/about" className={`button ${isActive('/about')? 'active': ''}`}>ABOUT US</Link>
-              <Link to="/analytics" className={`button ${isActive('/analytics')? 'active': ''}`}>ANALYTICS</Link>
-              <Link to="/Feedback/feedback" className={`nav-link ${isActive('/Feedback/feedback') ? 'active' : ''}`}>Feedback</Link>
-              <Link to="/accountsettings" className={`button ${isActive('/accontsettings')? 'active': ''}`}>SETTINGS</Link>
-            {/* </div>
-          </div> */}
-
-      </nav>
-    )}
-
-  
+    <div style={{ backgroundColor: 'maroon', minHeight: '100vh', color: 'white' }}>
+      {!isLandingPage && (
+        <nav className="navbar">
+          <Link to="/home/home" className="logo-container">
+            <img src={logo1} alt="CITU - SMART EATS Logo" className="logo" />
+          </Link>
+          {/* <button className="menu-icon" onClick={toggleMenu}>
+            ☰
+          </button>
+          {isMenuOpen && (
+            <div className="menu-overlay">
+              <div className="menu-options"> */}
+                <Link to="/MenuItem/menuitem" className={`button ${isActive('/MenuItem/menuitem') ? 'active' : ''}`}>MENU ITEM</Link>
+                <Link to="/Inventory/inventory" className={`button ${isActive('/Inventory/inventory') ? 'active' : ''}`}>INVENTORY</Link>
+                <Link to="/MenuItem/view-menu" className={`button ${isActive('/MenuItem/view-menu') ? 'active' : ''}`}>MENU</Link>
+                <Link to="/Payment/payment" className={`button ${isActive('/Payment/payment') ? 'active' : ''}`}>PAYMENT</Link>
+                <Link to="/Staff/staff" className={`button ${isActive('/Staff/staff') ? 'active' : ''}`}>STAFF</Link>
+                <Link to="/Order/order" className={`button ${isActive('/Order/order') ? 'active' : ''}`}>ORDER</Link>
+                <Link to="/Order/order-list" className={`button ${isActive('/Order/order-list') ? 'active' : ''}`}>ORDER LIST</Link>
+                <Link to="/about" className={`button ${isActive('/about') ? 'active' : ''}`}>ABOUT US</Link>
+                <Link to="/analytics" className={`button ${isActive('/analytics') ? 'active' : ''}`}>ANALYTICS</Link>
+                <Link to="/Feedback/feedback" className={`button ${isActive('/Feedback/feedback') ? 'active' : ''}`}>FEEDBACK</Link>
+                <Link to="/accountsettings" className={`button ${isActive('/accountsettings') ? 'active' : ''}`}>SETTINGS</Link>
+              {/* </div>
+            </div> */}
+        </nav>
+      )}
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/MenuItem/menuitem" element={<MenuItem />} />
@@ -83,6 +82,7 @@ const App = () => {
         <Route path="/Staff/staff-list" element={<StaffList />} />
         <Route path="/Student/student" element={<Student />} />
         <Route path="/Order/order" element={<Order />} />
+        <Route path="/Order/order-list" element={<OrderList />} />
         <Route path="/studentinfo" element={<StudentInfo />} />
         <Route path="/studentlist" element={<StudentList />} />
         <Route path="/MenuItem/view-menu" element={<Menu />} />
@@ -92,7 +92,6 @@ const App = () => {
         <Route path="/accountsettings" element={<AccountSettings />} />
         <Route path="/Feedback/feedback" element={<Feedback />} />
         <Route path="/Feedback/feedbacklist" element={<FeedbackList />} />
-
       </Routes>
     </div>
   );

@@ -1,46 +1,68 @@
-// PaymentList.js
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './PaymentList.css';
 
 const PaymentList = () => {
   const [payments, setPayments] = useState([]);
-  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (location.state && location.state.payments) {
-      setPayments(location.state.payments);
-    } else {
-      const fetchPayments = async () => {
-        try {
-          const response = await axios.get('http://localhost:8080/api/payments/getPayment'); // Ensure correct endpoint
-          setPayments(response.data);
-        } catch (error) {
-          console.error('Error fetching payments:', error);
-        }
-      };
-      fetchPayments();
+    fetchPayments();
+  }, []);
+
+  const fetchPayments = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/api/payments/getPayment');
+      setPayments(response.data);
+    } catch (error) {
+      console.error('Error fetching payments:', error);
     }
-  }, [location.state]);
+  };
+
+  const editPayment = (payment) => {
+    navigate('/Payment/payment', { state: { payment } });
+  };
+
+  const deletePayment = async (paymentId) => {
+    try {
+      await axios.delete(`http://localhost:8080/api/payments/deletePayment/${paymentId}`);
+      fetchPayments();
+    } catch (error) {
+      console.error('Error deleting payment:', error);
+    }
+  };
 
   return (
     <div className="payment-list-container">
       <h1>Payment List</h1>
-      {payments.length > 0 ? (
-        payments.map(payment => (
-          <div key={payment.paymentId} className="payment-item">
-            <p>Payment ID: {payment.paymentId}</p>
-            <p>Payment Method: {payment.paymentMethod}</p>
-            <p>Payment Date: {payment.paymentDate}</p>
-            <p>Payment Status: {payment.status}</p>
-            <p>Amount: {payment.amount}</p>
-            <hr />
-          </div>
-        ))
-      ) : (
-        <p>No payments found.</p>
-      )}
+      <table className="payment-table">
+        <thead>
+          <tr>
+            <th>Payment ID</th>
+            <th>Payment Method</th>
+            <th>Payment Date</th>
+            <th>Payment Status</th>
+            <th>Amount</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {payments.map(payment => (
+            <tr key={payment.paymentId}>
+              <td>{payment.paymentId}</td>
+              <td>{payment.paymentMethod}</td>
+              <td>{payment.paymentDate}</td>
+              <td>{payment.status}</td>
+              <td>{payment.amount}</td>
+              <td>
+                <button onClick={() => editPayment(payment)}>Edit</button>
+                <button onClick={() => deletePayment(payment.paymentId)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 
-.payment-list-container {
+.feedback-list-container {
   width: 80%;
   margin: 0 auto;
   padding: 20px;
@@ -8,7 +8,7 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.payment-list-container h1 {
+.feedback-list-container h1 {
   text-align: center;
   color: #333;
   font-size: 24px;
@@ -45,19 +45,19 @@ td {
   color: #555;
 }
 
-.payment-list-container table {
+.feedback-list-container table {
   margin-top: 20px;
 }
 
-.payment-list-container table th, .payment-list-container table td {
+.feedback-list-container table th, .feedback-list-container table td {
   padding: 10px 15px;
 }
 
-.payment-list-container table th {
+.feedback-list-container table th {
   background-color: #343a40;
   color: white;
 }
 
-.payment-list-container table tr:hover {
+.feedback-list-container table tr:hover {
   background-color: #ddd;
 }

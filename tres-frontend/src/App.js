@@ -14,15 +14,18 @@ import PaymentList from './Payment/PaymentList';
 import StaffList from './Staff/StaffList';
 import Student from './Student/Student';
 import Order from './Order/Order';
+import OrderList from './Order/OrderList';
 import StudentInfo from './Student/StudentInfo';
 import StudentList from './Student/StudentList';
 import Menu from './MenuItem/Menuu';
 import MenuItemDetails from './MenuItem/Menudetails';
 import Landing from './Landing';
-import logo from './white_background.png';
+import logo1 from './white_background.png';
 import About from './AboutUs';
 import MenuItemAnalytics from './MenuItem/MenuitemAnalytics';
 import AccountSettings from './AccountSettings';
+import Feedback from './Feedback/Feedback';
+import FeedbackList from './Feedback/FeedbackList';
 // import { Button } from '@mui/material';
 
 const App = () => {
@@ -38,14 +41,12 @@ const App = () => {
   };
 
   return (
-    
 <div style={{ backgroundColor: 'maroon', minHeight: '100vh', color: 'white' }}>
-<link rel="icon" href="android-chrome-192x192.png" type="image/x-icon" />
     {!isLandingPage && (
       <nav className="navbar">
         <Link to="/home/home" className="logo-container">
-          <img src={logo} alt="CITU - SMART EATS Logo" className="logo" />
-        </Link><br/>
+          <img src={logo1} alt="CITU - SMART EATS Logo" className="logo" />
+        </Link>
         {/* <button className="menu-icon" onClick={toggleMenu}>
           ☰
         </button>
@@ -57,9 +58,11 @@ const App = () => {
               <Link to="/MenuItem/view-menu" className={`button ${isActive('/view-menu') ? 'active' : ''}`}>MENU</Link>
               <Link to="/Payment/payment" className={`button ${isActive('/payment') ? 'active' : ''}`}>PAYMENT</Link>
               <Link to="/Staff/staff" className={`button ${isActive('/staff') ? 'active' : ''}`}>STAFF</Link>
+              <Link to="/Order/order" className={`button ${isActive('/order') ? 'active' : ''}`}>ORDER</Link>
               <Link to="/about" className={`button ${isActive('/about')? 'active': ''}`}>ABOUT US</Link>
               <Link to="/analytics" className={`button ${isActive('/analytics')? 'active': ''}`}>ANALYTICS</Link>
-              <Link to="/accountsettings" className={`button ${isActive('/accontsettings')? 'active': ''}`}>SETTINGS</Link>
+              <Link to="/Feedback/feedback" className={`button ${isActive('/Feedback/feedback') ? 'active' : ''}`}>FEEDBACK</Link>
+              
             {/* </div>
           </div> */}
 
@@ -70,7 +73,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/MenuItem/menuitem" element={<MenuItem />} />
-        <Route path="/MenuItem/view-all" element={<ViewAllItems />} />
+        <Route path="/MenuItem/Viewallitems" element={<ViewAllItems />} />
         <Route path="/Inventory/inventory" element={<Inventory />} />
         <Route path="/Inventory/inventory-table" element={<InventoryList />} />
         <Route path="/Login & Register/register" element={<Registration />} />
@@ -82,6 +85,7 @@ const App = () => {
         <Route path="/Staff/staff-list" element={<StaffList />} />
         <Route path="/Student/student" element={<Student />} />
         <Route path="/Order/order" element={<Order />} />
+        <Route path="/Order/orderlist" element={<OrderList />} />
         <Route path="/studentinfo" element={<StudentInfo />} />
         <Route path="/studentlist" element={<StudentList />} />
         <Route path="/MenuItem/view-menu" element={<Menu />} />
@@ -89,6 +93,8 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/analytics" element={<MenuItemAnalytics />} />
         <Route path="/accountsettings" element={<AccountSettings />} />
+        <Route path="/Feedback/feedback" element={<Feedback />} />
+        <Route path="/Feedback/feedbacklist" element={<FeedbackList />} />
 
       </Routes>
     </div>

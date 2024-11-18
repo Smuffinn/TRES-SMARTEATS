@@ -1,26 +1,21 @@
 package com.g4appdev.TES.Order;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 public class OrderEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long orderId;
+    private Long orderId;
 
-    @Column(name = "order_date", nullable = false)
-    private String orderDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date orderDate;
 
-    @Column(name = "order_time", nullable = false)
     private String orderTime;
-
-    @Column(name = "total_amount", nullable = false)
     private float totalAmount;
+    private String customerName;
 
     // Default constructor
     public OrderEntity() {
@@ -28,27 +23,27 @@ public class OrderEntity {
     }
 
     // Parameterized constructor
-    public OrderEntity(long orderId, String orderDate, String orderTime, float totalAmount) {
-        this.orderId = orderId;
+    public OrderEntity(Date orderDate, String orderTime, float totalAmount, String customerName) {
         this.orderDate = orderDate;
         this.orderTime = orderTime;
         this.totalAmount = totalAmount;
+        this.customerName = customerName;
     }
 
-    // Getters and Setters
-    public long getOrderId() {
+    // Getters and setters
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(long orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 
-    public String getOrderDate() {
+    public Date getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(String orderDate) {
+    public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -66,5 +61,20 @@ public class OrderEntity {
 
     public void setTotalAmount(float totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        if (orderTime == null) {
+            orderTime = new SimpleDateFormat("HH:mm:ss").format(new Date());
+        }
     }
 }

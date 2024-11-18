@@ -1,49 +1,44 @@
 package com.g4appdev.TES.Order;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class OrderService {
 
-    private final OrderRepository orderRepository;
-
     @Autowired
-    public OrderService(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
-    }
+    private OrderRepository orderRepository;
 
-    // Create or Update an Order
-    public OrderEntity saveOrder(OrderEntity order) {
-        return orderRepository.save(order);
-    }
-
-    // Read an Order by ID
-    public Optional<OrderEntity> getOrderById(long orderId) {
-        return orderRepository.findById(orderId);
-    }
-
-    // Read all Orders
     public List<OrderEntity> getAllOrders() {
         return orderRepository.findAll();
     }
 
-    // Update an existing Order
-    public OrderEntity updateOrder(long orderId, OrderEntity orderDetails) {
-        OrderEntity existingOrder = orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found with id " + orderId));
-
-        // Update fields
-        existingOrder.setOrderDate(orderDetails.getOrderDate());
-        existingOrder.setOrderTime(orderDetails.getOrderTime());
-        existingOrder.setTotalAmount(orderDetails.getTotalAmount());
-
-        return orderRepository.save(existingOrder);
+    public OrderEntity saveOrder(OrderEntity order) {
+        if (order.getOrderId() == null) {
+            throw new IllegalArgumentException("Order ID must be provided");
+        }
+        return orderRepository.save(order);
     }
 
-    // Delete an Order by ID
-    public void deleteOrder(long orderId) {
-        orderRepository.deleteById(orderId);
+    public Optional<OrderEntity> updateOrder(Long id, OrderEntity order) {
+        return orderRepository.findById(id).map(existingOrder -> {
+            existingOrder.setOrderDate(order.getOrderDate());
+            existingOrder.setOrderTime(order.getOrderTime());
+            existingOrder.setTotalAmount(order.getTotalAmount());
+            existingOrder.setCustomerName(order.getCustomerName());
+            return orderRepository.save(existingOrder);
+        });
+    }
+
+    public String deleteOrder(Long id) {
+        orderRepository.deleteById(id);
+        return "Order deleted successfully";
+    }
+
+    public Optional<OrderEntity> getOrderById(Long id) {
+        return Optional.ofNullable(orderRepository.findOrderById(id));
     }
 }

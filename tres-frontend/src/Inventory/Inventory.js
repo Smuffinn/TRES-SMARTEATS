@@ -15,6 +15,10 @@ const Inventory = () => {
     useEffect(() => {
         fetchInventories();
 
+        // Set the restock date to the current date
+        const currentDate = new Date().toISOString().split('T')[0];
+        setNewInventory((prevInventory) => ({ ...prevInventory, restock_date: currentDate }));
+
         // Check if there's inventory data passed from the InventoryList
         if (location.state && location.state.inventory) {
             setNewInventory(location.state.inventory); // Populate with inventory to edit
@@ -86,6 +90,7 @@ const Inventory = () => {
                 sx={{ marginBottom: 2 }}  // Adding space below the TextField
             />
 
+            
 
                 <button type="submit">
                     {editingInventory ? 'Update Inventory' : 'Add Inventory'}

@@ -44,6 +44,7 @@ const Menuitem = () => {
 
     const navigateToViewAll = () => {
         navigate('/MenuItem/view-all'); 
+        navigate('/MenuItem/viewallitems'); 
     };
 
     const resetForm = () => {

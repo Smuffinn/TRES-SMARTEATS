@@ -1,55 +1,68 @@
-// StaffList.js
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './StaffList.css';
 
 const StaffList = () => {
   const [staff, setStaff] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchStaff = async () => {
-      try {
-        const response = await axios.get('http://localhost:8080/api/staff/getStaff'); // Ensure correct endpoint
-        console.log('API Response:', response.data); // Debug: Log the API response
-        setStaff(response.data);
-      } catch (error) {
-        setError('Error fetching staff data');
-        console.error('Error fetching staff:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchStaff();
   }, []);
 
-  if (loading) {
-    return <div className="staff-list-container"><p>Loading...</p></div>;
-  }
+  const fetchStaff = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/api/staff/getStaff');
+      setStaff(response.data);
+    } catch (error) {
+      console.error('Error fetching staff:', error);
+    }
+  };
 
-  if (error) {
-    return <div className="staff-list-container"><p>{error}</p></div>;
-  }
+  const editStaff = (staff) => {
+    navigate('/Staff/staff', { state: { staff } });
+  };
+
+  const deleteStaff = async (staffId) => {
+    try {
+      await axios.delete(`http://localhost:8080/api/staff/deleteStaff/${staffId}`);
+      fetchStaff();
+    } catch (error) {
+      console.error('Error deleting staff:', error);
+    }
+  };
 
   return (
     <div className="staff-list-container">
       <h1>Staff List</h1>
-      {staff.length > 0 ? (
-        staff.map(member => (
-          <div key={member.staffId} className="staff-item">
-            <p>Staff ID: {member.staffId}</p>
-            <p>Name: {member.name}</p>
-            <p>Role: {member.role}</p>
-            <p>Contact Number: {member.contactNumber}</p>
-            <p>Schedule: {member.schedule}</p>
-            <hr />
-          </div>
-        ))
-      ) : (
-        <p>No staff members found.</p>
-      )}
+      <table className="staff-table">
+        <thead>
+          <tr>
+            <th>Staff ID</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Contact Number</th>
+            <th>Schedule</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {staff.map(member => (
+            <tr key={member.staffId}>
+              <td>{member.staffId}</td>
+              <td>{member.name}</td>
+              <td>{member.role}</td>
+              <td>{member.contactNumber}</td>
+              <td>{member.schedule}</td>
+              <td>
+                <button onClick={() => editStaff(member)}>Edit</button>
+                <button onClick={() => deleteStaff(member.staffId)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

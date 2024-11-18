@@ -29,7 +29,7 @@ const ViewAllMenuItems = () => {
 
     return (
         <div className="menu-container">
-            <h2>ALL MENU ITEMS</h2>
+            
             <div className="menu-cards">
                 {menuItems.map(item => (
                     <div className="menu-card" key={item.menu_id}>

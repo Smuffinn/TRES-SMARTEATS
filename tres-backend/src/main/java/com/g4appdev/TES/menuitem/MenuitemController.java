@@ -29,6 +29,8 @@ public class MenuitemController {
         return mserv.getAllMenu();
     }
     
+
+
     // Update
     @PutMapping("/putMenuitemDetails/{menu_id}")
     public MenuitemEntity putMenuitemDetails(@PathVariable int menu_id, @RequestBody MenuitemEntity newMenuitemDetails) {

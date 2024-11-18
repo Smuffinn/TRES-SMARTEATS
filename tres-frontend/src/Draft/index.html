@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Kiosk</title>
+  <link rel="stylesheet" href="menuDisplay.css">
+  <link rel="stylesheet" href="orderPlacement.css">
+  <link rel="stylesheet" href="paymentOptions.css">
+  <link rel="stylesheet" href="orderConfirmation.css">
+</head>
+<body>
+  <div class="menu"></div>
+
+  <div class="cart">
+    <h2>Your Cart</h2>
+    <ul class="cart-items"></ul>
+    <div class="cart-total">Total: $0.00</div>
+  </div>
+
+  <div class="payment-options">
+    <div class="payment-option card-payment">
+      <img src="card-icon.png" alt="Card Payment">
+      <p>Card Payment</p>
+    </div>
+    <div class="payment-option qr-payment">
+      <img src="qr-icon.png" alt="QR Payment">
+      <p>QR Payment</p>
+    </div>
+    <div class="payment-option cash-payment">
+      <img src="cash-icon.png" alt="Cash Payment">
+      <p>Cash Payment</p>
+    </div>
+  </div>
+
+  <div class="order-confirmation"></div>
+
+  <script src="menuDisplay.js"></script>
+  <script src="orderPlacement.js"></script>
+  <script src="paymentOptions.js"></script>
+  <script src="orderConfirmation.js"></script>
+</body>
+</html>

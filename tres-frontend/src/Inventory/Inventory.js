@@ -47,15 +47,14 @@ const Inventory = () => {
         }
     };
     const navigateToInventoryTable = () => {
-        navigate('/inventory-table'); // Navigate to InventoryTable component
         navigate('/Inventory/inventory-table'); // Navigate to InventoryTable component
     };
 
     return (
         <div className="container">
+
             <h1>INVENTORY</h1>
             <form onSubmit={addInventory}>
-            
             <TextField
                 type="text"
                 label="Stock Quantity"
@@ -87,11 +86,6 @@ const Inventory = () => {
                 sx={{ marginBottom: 2 }}  // Adding space below the TextField
             />
 
-            <Box spacing={2} display="flex" flexDirection="column">
-                <TextField
-                    type="text"
-                    label="Stock Quantity"
-                    variant="outlined"
 
                 <button type="submit">
                     {editingInventory ? 'Update Inventory' : 'Add Inventory'}

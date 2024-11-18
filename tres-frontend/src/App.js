@@ -19,7 +19,7 @@ import StudentList from './Student/StudentList';
 import Menu from './MenuItem/Menuu';
 import MenuItemDetails from './MenuItem/Menudetails';
 import Landing from './Landing';
-import logo1 from './white_background.png';
+import logo from './white_background.png';
 import About from './AboutUs';
 import MenuItemAnalytics from './MenuItem/MenuitemAnalytics';
 import AccountSettings from './AccountSettings';
@@ -38,12 +38,14 @@ const App = () => {
   };
 
   return (
+    
 <div style={{ backgroundColor: 'maroon', minHeight: '100vh', color: 'white' }}>
+<link rel="icon" href="android-chrome-192x192.png" type="image/x-icon" />
     {!isLandingPage && (
       <nav className="navbar">
         <Link to="/home/home" className="logo-container">
-          <img src={logo1} alt="CITU - SMART EATS Logo" className="logo" />
-        </Link>
+          <img src={logo} alt="CITU - SMART EATS Logo" className="logo" />
+        </Link><br/>
         {/* <button className="menu-icon" onClick={toggleMenu}>
           ☰
         </button>

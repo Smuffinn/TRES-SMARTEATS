@@ -19,7 +19,7 @@ const ViewAllMenuItems = () => {
 
     const editMenuItem = (item) => {
         // Navigate to the Menuitem page and set the item to be edited
-        navigate('/menuitem', { state: { item } }); // Assuming your Menuitem component handles the state
+        navigate('/MenuItem/menuitem', { state: { item } }); // Assuming your Menuitem component handles the state
     };
 
     const deleteMenuItem = async (menu_id) => {

@@ -10,7 +10,7 @@ const MenuItemDetails = () => {
 
     // Function to handle order button click
     const handleOrderClick = () => {
-        navigate('/order'); // Navigate to the /order route
+        navigate('/Order/order'); // Navigate to the /order route
     };
 
     return (

@@ -32,7 +32,7 @@ const ViewMenu = () => {
     const viewSelectedItemsDetails = () => {
         // Navigate to the MenuItemDetails page and pass the selected items
         const selectedItemsDetails = menuItems.filter(item => selectedItems.includes(item.menu_id));
-        navigate('/menuitemdetails', { state: { items: selectedItemsDetails } }); // Assuming your MenuItemDetails component can handle multiple items
+        navigate('/MenuItem/menuitemdetails', { state: { items: selectedItemsDetails } }); // Assuming your MenuItemDetails component can handle multiple items
     };
 
     return (

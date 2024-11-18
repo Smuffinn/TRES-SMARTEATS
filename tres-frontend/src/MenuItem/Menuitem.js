@@ -43,7 +43,7 @@ const Menuitem = () => {
     };
 
     const navigateToViewAll = () => {
-        navigate('/view-all'); 
+        navigate('/MenuItem/view-all'); 
     };
 
     const resetForm = () => {
@@ -67,7 +67,7 @@ const Menuitem = () => {
                 <TextField
                     id="price"
                     label="Price"
-                    variant="outlined"
+                    
                     value={newItem.price}
                     onChange={(e) => {
                         const value = e.target.value;

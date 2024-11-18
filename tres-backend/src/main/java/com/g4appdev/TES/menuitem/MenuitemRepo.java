@@ -1,15 +1,13 @@
 package com.g4appdev.TES.menuitem;
 
-//import org.hibernate.mapping.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import com.g4appdev.TES.inventory.InventoryEntity;
+import java.util.List;
 
 @Repository
-public interface MenuitemRepo extends JpaRepository<MenuitemEntity,Integer> {
-	public MenuitemEntity findByCategory(String category);
+public interface MenuitemRepo extends JpaRepository<MenuitemEntity, Integer> {
 
-	public InventoryEntity save(InventoryEntity inventory);
+    // Method to find MenuItems by Category
+    public MenuitemEntity findByCategory(String category);
 
 }

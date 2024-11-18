@@ -48,7 +48,7 @@ const InventoryList = () => {
 
     const editInventory = (inventory) => {
         // Navigate to Inventory component and pass the inventory data
-        navigate('/inventory', { state: { inventory } });
+        navigate('/Inventory/inventory', { state: { inventory } });
     };
 
     return (

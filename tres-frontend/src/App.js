@@ -27,6 +27,11 @@ import AccountSettings from './AccountSettings';
 import Feedback from './Feedback/Feedback';
 import FeedbackList from './Feedback/FeedbackList';
 // import { Button } from '@mui/material';
+import ChooseRole from './ChooseRole';
+import Choose from './Choose';
+
+
+
 
 const App = () => {
   const location = useLocation();
@@ -36,42 +41,30 @@ const App = () => {
   const [staffData, setStaffData] = useState([]); // Add state for staff data
   const isActive = (path) => location.pathname === path;
 
+    // Check for routes where the navbar should not show
+    const isLandingOrChooseRolePage = location.pathname === '/' || location.pathname === '/choose-role' || location.pathname === '/choose';
+  
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen); // Toggle menu visibility
   };
 
   return (
-<div style={{ backgroundColor: 'maroon', minHeight: '100vh', color: 'white' }}>
-    {!isLandingPage && (
-      <nav className="navbar">
-        <Link to="/home/home" className="logo-container">
-          <img src={logo1} alt="CITU - SMART EATS Logo" className="logo" />
-        </Link>
-        {/* <button className="menu-icon" onClick={toggleMenu}>
-          ☰
-        </button>
-        {isMenuOpen && (
-          <div className="menu-overlay">
-            <div className="menu-options"> */}
-              <Link to="/MenuItem/menuitem" className={`button ${isActive('/menuitem') ? 'active' : ''}`}>MENU ITEM</Link>
-              <Link to="/Inventory/inventory" className={`button ${isActive('/inventory') ? 'active' : ''}`}>INVENTORY</Link>
-              <Link to="/MenuItem/view-menu" className={`button ${isActive('/view-menu') ? 'active' : ''}`}>MENU</Link>
-              <Link to="/Payment/payment" className={`button ${isActive('/payment') ? 'active' : ''}`}>PAYMENT</Link>
-              <Link to="/Staff/staff" className={`button ${isActive('/staff') ? 'active' : ''}`}>STAFF</Link>
-              <Link to="/Order/order" className={`button ${isActive('/order') ? 'active' : ''}`}>ORDER</Link>
-              <Link to="/about" className={`button ${isActive('/about')? 'active': ''}`}>ABOUT US</Link>
-              <Link to="/analytics" className={`button ${isActive('/analytics')? 'active': ''}`}>ANALYTICS</Link>
-              <Link to="/Feedback/feedback" className={`button ${isActive('/Feedback/feedback') ? 'active' : ''}`}>FEEDBACK</Link>
-              
-            {/* </div>
-          </div> */}
-
-      </nav>
-    )}
+    <div style={{ backgroundColor: 'maroon', minHeight: '100vh', color: 'white' }}>
+      {/* Navbar is hidden on Landing, ChooseRole, and Choose pages */}
+      {!isLandingOrChooseRolePage && (
+        <nav className="navbar">
+          <Link to="/home/home" className="logo-container">
+            <img src={logo1} alt="CITU - SMART EATS Logo" className="logo" />
+          </Link>
+          {/* Your other navbar links */}
+        </nav> 
+      )}
 
   
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/choose" element={<Choose />} />
+        <Route path="/choose-role" element={<ChooseRole />} />
         <Route path="/MenuItem/menuitem" element={<MenuItem />} />
         <Route path="/MenuItem/Viewallitems" element={<ViewAllItems />} />
         <Route path="/Inventory/inventory" element={<Inventory />} />

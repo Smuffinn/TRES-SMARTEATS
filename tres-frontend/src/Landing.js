@@ -7,7 +7,7 @@ const Landing = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/home');
+    navigate('/choose-role');
   };
 
   return (

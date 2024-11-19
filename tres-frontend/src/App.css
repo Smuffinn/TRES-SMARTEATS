@@ -725,3 +725,148 @@ textarea {
     padding: 12px 20px;
   }
 }
+
+.choose-role-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  margin: 20;
+}
+.choose-role-content{
+  background-color: #800000;
+  height: auto;
+  justify-content: center;
+}
+.choose-role-title{
+  color:white;
+}
+/* Left side: Image */
+.image-side {
+  flex: 1; /* Take up 50% of the container */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eaeaea; /* Optional background for contrast */
+}
+
+.role-image {
+  width: 100%; /* Full width of the container */
+  height: auto  ; /* Maintain aspect ratio */
+  object-fit: cover; /* Ensure the image covers its container neatly */
+}
+
+/* Right side: Content */
+.content-side {
+  flex: 1; /* Take up the other 50% of the container */
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: right;
+  background-color: maroon;
+}
+
+.logo {
+  max-width: 200px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 24px;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.role-customer {
+  width: 302px;
+  padding: 10px;
+  font-size: 18px;
+    color: white;
+  background-color: gold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.role-staff {
+  width: 302px;
+  padding: 10px;
+  font-size: 18px;
+  color: white;
+  background-color: gold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.role-staff:hover {
+  background-color: #464444;
+}
+.role-customer:hover {
+  background-color: #464444;
+}
+.choose-role {
+  color: white; /* Sets the text color to white */
+  font-size: 24px; /* Optional: Adjust size */
+  text-align: center; /* Optional: Aligns the text */
+  margin: 20px 0; /* Optional: Adds spacing around the text */
+}
+.image-button-group {
+  display: flex;
+  justify-content: space-evenly; /* This ensures even space between the two options */
+  gap: 30px;
+  align-items: center;
+  flex-direction: row;
+}
+
+.option-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 200px; /* Adjust as needed */
+  transition: transform 0.3s ease; /* Smooth transform on hover */
+}
+
+.option-container:hover {
+  transform: translateY(-10px); /* Moves the container upwards on hover */
+}
+
+.option-image {
+  width: 150px; /* Adjust based on your image size */
+height: auto;
+cursor: pointer;
+transition: transform 0.3s ease; /* Smooth scaling on hover */
+}
+
+/* .option-image:hover {
+transform: scale(1.1); /* Scales up the image slightly on hover 
+} */
+
+.option-button {
+margin-top: 10px;
+padding: 10px 20px;
+background-color: gold;
+border: none;
+color: black;
+font-size: 16px;
+cursor: pointer;
+text-transform: uppercase;
+transition: background-color 0.3s, color 0.3s;
+border-radius: 5px;
+width: 100%;
+}
+
+.option-button:hover {
+background-color: grey;
+color: white;
+transform: scale(1.1); /* Slightly enlarges the button when hovered */
+}

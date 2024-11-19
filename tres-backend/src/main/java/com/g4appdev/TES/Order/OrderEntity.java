@@ -8,13 +8,21 @@ import java.util.Date;
 public class OrderEntity {
 
     @Id
-    private Long orderId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "orderId")
+    private Integer orderId;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "orderDate")
     private Date orderDate;
 
+    @Column(name = "orderTime")
     private String orderTime;
+
+    @Column(name = "totalAmount")
     private float totalAmount;
+
+    @Column(name = "customerName")
     private String customerName;
 
     // Default constructor
@@ -31,11 +39,11 @@ public class OrderEntity {
     }
 
     // Getters and setters
-    public Long getOrderId() {
+    public Integer getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Long orderId) {
+    public void setOrderId(Integer orderId) {
         this.orderId = orderId;
     }
 
@@ -73,6 +81,9 @@ public class OrderEntity {
 
     @PrePersist
     protected void onCreate() {
+        if (orderDate == null) {
+            orderDate = new Date(); // Set current date if not provided
+        }
         if (orderTime == null) {
             orderTime = new SimpleDateFormat("HH:mm:ss").format(new Date());
         }

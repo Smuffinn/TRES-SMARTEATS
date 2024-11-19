@@ -6,8 +6,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface OrderRepository extends JpaRepository<OrderEntity, Long> {
+public interface OrderRepository extends JpaRepository<OrderEntity, Integer> {
     
     @Query("SELECT oe FROM OrderEntity oe WHERE oe.orderId = :orderId")
-    OrderEntity findOrderById(@Param("orderId") Long orderId);
+    OrderEntity findOrderById(@Param("orderId") Integer orderId);
 }

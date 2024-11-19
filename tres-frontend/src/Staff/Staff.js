@@ -32,12 +32,13 @@ const Staff = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (staffDetails.staffId) {
-        await axios.put(`http://localhost:8080/api/staff/putStaff/${staffDetails.staffId}`, staffDetails);
+      if (!staffDetails.staffId) {
+        const response = await axios.post('http://localhost:8080/api/staff/postStaff', staffDetails);
+        setStaffDetails({ ...staffDetails, staffId: response.data.staffId });
       } else {
-        await axios.post('http://localhost:8080/api/staff/postStaff', staffDetails);
+        await axios.put(`http://localhost:8080/api/staff/putStaff/${staffDetails.staffId}`, staffDetails);
       }
-      navigate('/staff-list');
+      navigate('/Staff/staff-list');
     } catch (error) {
       console.error('Error saving staff:', error);
     }

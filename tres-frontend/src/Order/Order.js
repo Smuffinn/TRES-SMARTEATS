@@ -6,11 +6,11 @@ import { Box, TextField } from '@mui/material';
 
 const Order = () => {
   const [orderDetails, setOrderDetails] = useState({
-    Order_ID: '',
-    Customer_Name: '',
-    Order_Date: new Date().toISOString().split('T')[0], // Set current date
-    Order_Time: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }), // Set current time
-    Total_Amount: ''
+    orderId: '',
+    customerName: '',
+    orderDate: new Date().toISOString().split('T')[0], // Set current date
+    orderTime: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }), // Set current time
+    totalAmount: ''
   });
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,13 +32,23 @@ const Order = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (!orderDetails.Order_ID) {
-        const response = await axios.post('http://localhost:8080/api/orders/postOrder', orderDetails);
-        setOrderDetails({ ...orderDetails, Order_ID: response.data.Order_ID });
+      const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+      const formattedOrderDetails = {
+        ...orderDetails,
+        orderDate: new Date(orderDetails.orderDate).toISOString(),
+        orderTime: orderDetails.orderTime + ":00" // Ensure time is in HH:mm:ss format
+      };
+      if (!orderDetails.orderId) {
+        const response = await axios.post('http://localhost:8080/api/orders/postOrder', formattedOrderDetails, config);
+        setOrderDetails({ ...orderDetails, orderId: response.data.orderId });
       } else {
-        await axios.put(`http://localhost:8080/api/orders/putOrder/${orderDetails.Order_ID}`, orderDetails);
+        await axios.put(`http://localhost:8080/api/orders/putOrder/${orderDetails.orderId}`, formattedOrderDetails, config);
       }
-      navigate('/order/order-list');
+      navigate('/Payment/Payment'); // Ensure navigation happens after successful submission
     } catch (error) {
       console.error('Error saving order:', error);
     }
@@ -51,22 +61,21 @@ const Order = () => {
         <Box spacing={2} display="flex" flexDirection="column">
           <TextField
             type="text"
-            id="Order_ID"
-            name="Order_ID"
+            id="orderId"
+            name="orderId"
             label="Order ID"
-            value={orderDetails.Order_ID}
+            value={orderDetails.orderId}
             onChange={handleChange}
             fullWidth
             margin="normal"
             variant="outlined"
-            required
           />
           <TextField
             type="text"
-            id="Customer_Name"
-            name="Customer_Name"
+            id="customerName"
+            name="customerName"
             label="Customer Name"
-            value={orderDetails.Customer_Name}
+            value={orderDetails.customerName}
             onChange={handleChange}
             fullWidth
             margin="normal"
@@ -75,10 +84,10 @@ const Order = () => {
           />
           <TextField
             type="date"
-            id="Order_Date"
-            name="Order_Date"
+            id="orderDate"
+            name="orderDate"
             label="Order Date"
-            value={orderDetails.Order_Date}
+            value={orderDetails.orderDate}
             onChange={handleChange}
             fullWidth
             margin="normal"
@@ -87,10 +96,10 @@ const Order = () => {
           />
           <TextField
             type="time"
-            id="Order_Time"
-            name="Order_Time"
+            id="orderTime"
+            name="orderTime"
             label="Order Time"
-            value={orderDetails.Order_Time}
+            value={orderDetails.orderTime}
             onChange={handleChange}
             fullWidth
             margin="normal"
@@ -99,10 +108,10 @@ const Order = () => {
           />
           <TextField
             type="number"
-            id="Total_Amount"
-            name="Total_Amount"
+            id="totalAmount"
+            name="totalAmount"
             label="Total Amount"
-            value={orderDetails.Total_Amount}
+            value={orderDetails.totalAmount}
             onChange={handleChange}
             fullWidth
             margin="normal"
@@ -111,9 +120,9 @@ const Order = () => {
           />
         </Box>
         <button type="submit">
-          {orderDetails.Order_ID ? 'Update Order' : 'Add Order'}
+          {orderDetails.orderId ? 'Update Order' : 'Add Order'}
         </button>
-        <button type="button" onClick={() => navigate('/order/order-list')}>
+        <button type="button" onClick={() => navigate('/Order/order-list')}>
           Order List
         </button>
       </form>

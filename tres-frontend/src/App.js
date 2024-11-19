@@ -57,6 +57,15 @@ const App = () => {
             <img src={logo1} alt="CITU - SMART EATS Logo" className="logo" />
           </Link>
           {/* Your other navbar links */}
+          <Link to="/MenuItem/menuitem" className={isActive('/MenuItem/menuitem') ? 'active' : ''}>Menu Item</Link>
+          <Link to="/Inventory/inventory" className={isActive('/Inventory/inventory') ? 'active' : ''}>Inventory</Link>
+          <Link to="/Payment/payment" className={isActive('/Payment/payment') ? 'active' : ''}>Payment</Link>
+          <Link to="/Staff/staff" className={isActive('/Staff/staff') ? 'active' : ''}>Staff</Link>
+          {/* <Link to="/Student/student" className={isActive('/Student/student') ? 'active' : ''}>Student</Link> */}
+          <Link to="/Order/order" className={isActive('/Order/order') ? 'active' : ''}>Order</Link>
+          <Link to="/about" className={isActive('/about') ? 'active' : ''}>About Us</Link>
+          {/* <Link to="/accountsettings" className={isActive('/accountsettings') ? 'active' : ''}>Account Settings</Link> */}
+          <Link to="/Feedback/feedback" className={isActive('/Feedback/feedback') ? 'active' : ''}>Feedback</Link>
         </nav> 
       )}
 
@@ -78,7 +87,7 @@ const App = () => {
         <Route path="/Staff/staff-list" element={<StaffList />} />
         <Route path="/Student/student" element={<Student />} />
         <Route path="/Order/order" element={<Order />} />
-        <Route path="/Order/orderlist" element={<OrderList />} />
+        <Route path="/Order/order-list" element={<OrderList />} />
         <Route path="/studentinfo" element={<StudentInfo />} />
         <Route path="/studentlist" element={<StudentList />} />
         <Route path="/MenuItem/view-menu" element={<Menu />} />

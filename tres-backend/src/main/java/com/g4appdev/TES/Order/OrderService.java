@@ -17,13 +17,10 @@ public class OrderService {
     }
 
     public OrderEntity saveOrder(OrderEntity order) {
-        if (order.getOrderId() == null) {
-            throw new IllegalArgumentException("Order ID must be provided");
-        }
         return orderRepository.save(order);
     }
 
-    public Optional<OrderEntity> updateOrder(Long id, OrderEntity order) {
+    public Optional<OrderEntity> updateOrder(Integer id, OrderEntity order) {
         return orderRepository.findById(id).map(existingOrder -> {
             existingOrder.setOrderDate(order.getOrderDate());
             existingOrder.setOrderTime(order.getOrderTime());
@@ -33,12 +30,12 @@ public class OrderService {
         });
     }
 
-    public String deleteOrder(Long id) {
+    public String deleteOrder(Integer id) {
         orderRepository.deleteById(id);
         return "Order deleted successfully";
     }
 
-    public Optional<OrderEntity> getOrderById(Long id) {
+    public Optional<OrderEntity> getOrderById(Integer id) {
         return Optional.ofNullable(orderRepository.findOrderById(id));
     }
 }

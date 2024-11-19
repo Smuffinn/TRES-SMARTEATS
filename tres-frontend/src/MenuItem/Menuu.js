@@ -37,7 +37,7 @@ const ViewMenu = () => {
 
     return (
         <div className="menu-container">
-            <h2>ALL MENU ITEMS</h2>
+            {/* <h2>ALL MENU ITEMS</h2> */}
             <div className="menu-cards">
                 {menuItems.map(item => (
                     <div 

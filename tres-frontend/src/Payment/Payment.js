@@ -8,7 +8,7 @@ const Payment = () => {
   const [paymentDetails, setPaymentDetails] = useState({
     paymentId: '',
     paymentMethod: '',
-    paymentDate: '',
+    paymentDate: new Date().toISOString().split('T')[0], // Set current date
     status: '',
     amount: ''
   });
@@ -37,7 +37,7 @@ const Payment = () => {
       } else {
         await axios.post('http://localhost:8080/api/payments/postPayment', paymentDetails);
       }
-      navigate('/payment-list');
+      navigate('/Payment/payment-list');
     } catch (error) {
       console.error('Error saving payment:', error);
     }

@@ -26,12 +26,11 @@ import MenuItemAnalytics from './MenuItem/MenuitemAnalytics';
 import AccountSettings from './AccountSettings';
 import Feedback from './Feedback/Feedback';
 import FeedbackList from './Feedback/FeedbackList';
+// import DataAnalytics from './DataAnalytics/DataAnalytics';
 // import { Button } from '@mui/material';
 import ChooseRole from './ChooseRole';
 import Choose from './Choose';
-
-
-
+import StockOverview from './StockOverview';
 
 const App = () => {
   const location = useLocation();
@@ -53,7 +52,7 @@ const App = () => {
       {/* Navbar is hidden on Landing, ChooseRole, and Choose pages */}
       {!isLandingOrChooseRolePage && (
         <nav className="navbar">
-          <Link to="/home/home" className="logo-container">
+          <Link to="/" className="logo-container">
             <img src={logo1} alt="CITU - SMART EATS Logo" className="logo" />
           </Link>
           {/* Your other navbar links */}
@@ -66,6 +65,8 @@ const App = () => {
           <Link to="/about" className={isActive('/about') ? 'active' : ''}>About Us</Link>
           {/* <Link to="/accountsettings" className={isActive('/accountsettings') ? 'active' : ''}>Account Settings</Link> */}
           <Link to="/Feedback/feedback" className={isActive('/Feedback/feedback') ? 'active' : ''}>Feedback</Link>
+          {/* <Link to="/DataAnalytics/DataAnalytics" className={isActive('/DataAnalytics/DataAnalytics') ? 'active' : ''}>Data Analytics</Link> */}
+           {/* <Link to="/stock" className={isActive('/stock') ? 'active' : ''}>Stock Overview</Link> */}
         </nav> 
       )}
 
@@ -97,7 +98,7 @@ const App = () => {
         <Route path="/accountsettings" element={<AccountSettings />} />
         <Route path="/Feedback/feedback" element={<Feedback />} />
         <Route path="/Feedback/feedbacklist" element={<FeedbackList />} />
-
+        <Route path="/stock" element={<StockOverview />} />
       </Routes>
     </div>
   );

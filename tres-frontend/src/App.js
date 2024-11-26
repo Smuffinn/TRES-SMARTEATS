@@ -59,7 +59,7 @@ const App = () => {
           <Link to="/MenuItem/menuitem" className={isActive('/MenuItem/menuitem') ? 'active' : ''}>Menu Item</Link>
           <Link to="/Inventory/inventory" className={isActive('/Inventory/inventory') ? 'active' : ''}>Inventory</Link>
           <Link to="/Payment/payment" className={isActive('/Payment/payment') ? 'active' : ''}>Payment</Link>
-          <Link to="/Staff/staff" className={isActive('/Staff/staff') ? 'active' : ''}>Staff</Link>
+          <Link to="/Staff/staff" className={isActive('/Staff/staff') ? 'active' : ''}>Staffs</Link>
           {/* <Link to="/Student/student" className={isActive('/Student/student') ? 'active' : ''}>Student</Link> */}
           <Link to="/Order/order" className={isActive('/Order/order') ? 'active' : ''}>Order</Link>
           <Link to="/about" className={isActive('/about') ? 'active' : ''}>About Us</Link>

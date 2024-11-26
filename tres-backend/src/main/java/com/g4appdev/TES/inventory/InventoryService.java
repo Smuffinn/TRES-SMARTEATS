@@ -52,7 +52,7 @@ public class InventoryService {
 	//DELETE
 	public String deleteInventory(int inventory_id) {
 		String msg = "";
-		if(irepo.findById(inventory_id)!=null) {
+		if(irepo.existsById(inventory_id)) {
 			irepo.deleteById(inventory_id);
 			msg = "Successfully deleted!";
 		}else

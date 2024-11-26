@@ -59,10 +59,10 @@ The frontend is built using React and is located in the `tres-frontend` director
 
 ## Team Members
 
-- **Jenette Ephan** - 
-- **Steven Jan Tabungar** - 
-- **Gwyn Sapio** - 
-- **Raven King Pavo** - 
+- **Jenette Ephan**  
+- **Steven Jan Tabungar** 
+- **Gwyn Sapio** 
+- **Raven King Pavo** 
  
 
 ## Learn More

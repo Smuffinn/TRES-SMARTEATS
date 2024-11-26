@@ -1,0 +1,382 @@
+/* Container holding everything */
+.contain {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+  }
+  
+  /* Main content area */
+  .main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 1024px; /* Ensure the main area takes full height */
+    padding: 20px;
+  }
+  
+  /* Logo container for the image */
+  .logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: maroon;
+  }
+  
+  /* Style the logo image */
+  .logo {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Content wrapper to hold sidebar, menu, and about */
+  .content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+    gap: 20px;
+    
+  }
+  
+  /* Sidebar navigation */
+  .nav-sidebar {
+    width: 250px;
+    background-color: #f8f8f8;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .navbar-container {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #e0e0e0;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .navbar-container:hover {
+    background-color: maroon;
+    color: white;
+  }
+  
+  /* Menu container for cards */
+  .menu-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: left; /* Vertically center the grid */
+    align-items: center;    /* Horizontally center the grid */
+    gap: 10px;
+    width: 300vh;
+    height: 300vh; }
+  /* Menu cards container */
+.menu-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 items per row */
+    gap: 20px; /* Adjust gap between items */
+    width: 100%;
+   max-height: 300px;
+}
+/* 
+
+/* Hover effect */
+.menu-card:hover {
+    transform: scale(1.05); /* Slight scale effect on hover */
+}
+
+/* Ensure that the image covers the area nicely */
+.menu-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+/* Styling for item name and price */
+.menu-card h3 {
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+.menu-card p {
+    font-size: 1rem;
+    color: #555;
+}
+
+  
+  /* About section styling */
+  .about {
+    width: 383px;
+    background-color: rgba(255, 215, 0, 1); /* Yellow background */
+    padding: 20px;
+    text-align: center;
+    border-radius: 5px;
+  }
+  
+  .about h1 {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  /* Button styling */
+  button {
+    padding: 10px 20px;
+    background-color: maroon;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #a60000;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+/* Order Summary Styles */
+.order-summary {
+  margin: 30px auto;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1), -4px -4px 12px rgba(255, 255, 255, 0.6);
+}
+
+.order-summary h2 {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: bold;
+}
+
+.order-summary table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.order-summary th, .order-summary td {
+  padding: 15px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.order-summary th {
+  background-color: #eaeaea;
+  color: #555;
+  font-weight: 600;
+  border-bottom: 2px solid #ccc;
+}
+
+.order-summary td {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.order-summary td img {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+}
+
+.order-summary td button {
+ 
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.order-summary td button:hover {
+  background-color: maroon;
+}
+
+.order-summary td .MuiIconButton-root {
+  color: #d9534f; /* Red for delete icon */
+  transition: transform 0.3s ease;
+}
+
+.order-summary td .MuiIconButton-root:hover {
+  transform: scale(1.2); /* Slight zoom on hover */
+}
+
+.order-summary td p {
+  display: inline-block;
+  margin: 0 10px;
+  font-size: 18px;
+  color: #333;
+  font-weight: bold;
+}
+
+tfoot tr {
+  font-weight: bold;
+  font-size: 18px;
+  color: #444;
+}
+
+tfoot td {
+  padding-top: 20px;
+  background-color: #f9f9f9;
+}
+
+
+  
+  button {
+   
+    color: white;
+    border: none;
+    padding:8px;
+    margin:5px;
+    width: 5;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+  }
+  
+  button:hover {
+    background-color: maroon; /* Darker gold */
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  .order-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .order-actions button {
+    width: 48%;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Total Summary Styles */
+  .total-summary {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 20px;
+    text-align: right;
+    color: #800000; /* Maroon color */
+  }
+  
+
+  
+  /* Custom p tag for quantity */
+  p {
+    display: inline-block;
+    font-size: 1.2rem;
+    margin: 0 10px;
+    color: #333;
+  }
+  
+  /* Styling for buttons with actions */
+  button {
+    font-size: 1rem;
+  }
+  /* Icon Button Styles for Delete */
+.icon-button {
+  color: maroon; /* Matches the theme color */
+  transition: transform 0.3s ease;
+}
+
+.icon-button:hover {
+  transform: scale(1.1); /* Slightly enlarges the icon on hover */
+}
+@media (max-width: 768px) {
+  .menu-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-cards {
+    grid-template-columns: 1fr;
+  }
+}
+.loading-spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid maroon;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+table td button {
+  margin: 0 5px;
+}
+.total-summary {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: right;
+  color: #800000; /* Maroon color */
+}
+
+.total-summary p {
+  /* border-top: 2px solid maroon; */
+  padding-top: 10px;
+}
+ 
+.category-sidebar button {
+  display: block;
+  width: 100%;
+  padding: 12px 0;
+  margin: 10px 0;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2em;
+  color: #333;
+  cursor: pointer;
+  text-align: center;
+}
+
+.category-sidebar button:hover {
+  background-color: #ddd;
+  transition: background-color 0.3s;
+}
+
+.category-sidebar button:active {
+  background-color: #ccc;
+}
+
+/* Optional: Add a border at the bottom of the buttons for a more defined look */
+.category-sidebar button:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+}
+

@@ -9,16 +9,17 @@ const ChooseRole = () => {
     <div className="choose-role-container">
       {/* Minimal Header */}
 
-<header className="choose-role-header">
-<Link to="/">
-  <img src={chooseRoleImage} alt="Logo" className="choose-role-logo" />
-</Link>
-</header>
+<div className="choose-role-header">
+
+  <img src={chooseRoleImage} alt="" className="image-side" />
+
+</div>
 
 {/* Main Content */}
 <div className="choose-role-content">
 <div className="image-side">
-  <img src={logo} alt="Role Selection" className="role-image" />
+<Link to="/"> <img src={logo} alt="Logo"  className="role-image" /></Link>
+{/* <img src={logo} alt="Role Selection"/> */}
 </div>
 <div className="content-side">
   <h2 className="choose-role-title">Please Choose:</h2>

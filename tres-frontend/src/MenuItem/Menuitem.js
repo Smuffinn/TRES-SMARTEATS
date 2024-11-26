@@ -94,7 +94,8 @@ const Menuitem = () => {
                     }}
                     sx={{ textAlign: 'left' }} // Ensures selected item aligns to the left
                 >
-                    <MenuItem value="Meals">Meals</MenuItem>
+                    <MenuItem value="Rice Meals">Rice Meals</MenuItem>
+                    <MenuItem value="Desserts">Desserts</MenuItem>
                     <MenuItem value="Snacks">Snacks</MenuItem>
                     <MenuItem value="Drinks">Drinks</MenuItem>
                 </Select>

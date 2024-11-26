@@ -20,7 +20,7 @@ const Choose = () => {
 
       {/* Right side: Logo and options */}
       <div className="content-side">
-        <img src={logo} alt="Logo" className="logo" />
+       <Link to="/"> <img src={logo} alt="Logo" className="logo" /></Link>
         <h2 className="choose-role">Please Choose:</h2>
         <br />
         <br />

@@ -735,6 +735,7 @@ textarea {
 .choose-role-content{
   background-color: #800000;
   height: auto;
+  width: auto;
   justify-content: center;
 }
 .choose-role-title{
@@ -746,7 +747,8 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #eaeaea; /* Optional background for contrast */
+  height: auto;
+/* Optional background for contrast */
 }
 
 .role-image {
@@ -790,7 +792,7 @@ h2 {
     color: white;
   background-color: gold;
   border: none;
-  border-radius: 5px;
+  border-radius:25px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -801,7 +803,7 @@ h2 {
   color: white;
   background-color: gold;
   border: none;
-  border-radius: 5px;
+  border-radius: 25px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }

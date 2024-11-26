@@ -17,7 +17,7 @@ import Order from './Order/Order';
 import OrderList from './Order/OrderList';
 import StudentInfo from './Student/StudentInfo';
 import StudentList from './Student/StudentList';
-import Menu from './MenuItem/Menuu';
+// import Menu from './MenuItem/Menuu';
 import MenuItemDetails from './MenuItem/Menudetails';
 import Landing from './Landing';
 import logo1 from './white_background.png';
@@ -31,6 +31,8 @@ import FeedbackList from './Feedback/FeedbackList';
 import ChooseRole from './ChooseRole';
 import Choose from './Choose';
 import StockOverview from './StockOverview';
+import MainMenu from './MenuItem/MainMenu';
+// import MenuOrder from './MenuItem/MenuOrder';
 
 const App = () => {
   const location = useLocation();
@@ -41,7 +43,8 @@ const App = () => {
   const isActive = (path) => location.pathname === path;
 
     // Check for routes where the navbar should not show
-    const isLandingOrChooseRolePage = location.pathname === '/' || location.pathname === '/choose-role' || location.pathname === '/choose';
+    const isLandingOrChooseRolePage = location.pathname === '/' || location.pathname === '/choose-role' || location.pathname === '/choose' || location
+  .pathname==='/MenuItem/view-menu';
   
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen); // Toggle menu visibility
@@ -55,7 +58,6 @@ const App = () => {
           <Link to="/" className="logo-container">
             <img src={logo1} alt="CITU - SMART EATS Logo" className="logo" />
           </Link>
-          {/* Your other navbar links */}
           <Link to="/MenuItem/menuitem" className={isActive('/MenuItem/menuitem') ? 'active' : ''}>Menu Item</Link>
           <Link to="/Inventory/inventory" className={isActive('/Inventory/inventory') ? 'active' : ''}>Inventory</Link>
           <Link to="/Payment/payment" className={isActive('/Payment/payment') ? 'active' : ''}>Payment</Link>
@@ -66,7 +68,9 @@ const App = () => {
           {/* <Link to="/accountsettings" className={isActive('/accountsettings') ? 'active' : ''}>Account Settings</Link> */}
           <Link to="/Feedback/feedback" className={isActive('/Feedback/feedback') ? 'active' : ''}>Feedback</Link>
           {/* <Link to="/DataAnalytics/DataAnalytics" className={isActive('/DataAnalytics/DataAnalytics') ? 'active' : ''}>Data Analytics</Link> */}
-           {/* <Link to="/stock" className={isActive('/stock') ? 'active' : ''}>Stock Overview</Link> */}
+          {/* <Link to="/stock" className={isActive('/stock') ? 'active' : ''}>Stock Overview</Link> */}
+          {/* <Link to="/mainmenu" className={isActive('/mainmenu') ? 'active' : ''}>Main Menu</Link> */}
+
         </nav> 
       )}
 
@@ -91,7 +95,7 @@ const App = () => {
         <Route path="/Order/order-list" element={<OrderList />} />
         <Route path="/studentinfo" element={<StudentInfo />} />
         <Route path="/studentlist" element={<StudentList />} />
-        <Route path="/MenuItem/view-menu" element={<Menu />} />
+        <Route path="/MenuItem/view-menu" element={<MainMenu />} />
         <Route path="/MenuItem/menuitemdetails" element={<MenuItemDetails />} />
         <Route path="/about" element={<About />} />
         <Route path="/analytics" element={<MenuItemAnalytics />} />
@@ -99,6 +103,8 @@ const App = () => {
         <Route path="/Feedback/feedback" element={<Feedback />} />
         <Route path="/Feedback/feedbacklist" element={<FeedbackList />} />
         <Route path="/stock" element={<StockOverview />} />
+        {/* <Route path="/mainmenu" element={<MainMenu/>}/> */}
+        {/* <Route path="/ordermenu" element={<MenuOrder/>}/> */}
       </Routes>
     </div>
   );

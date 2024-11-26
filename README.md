@@ -2,6 +2,14 @@
 
 Welcome to the CITU - Smart Eats project! This platform is dedicated to providing an efficient and user-friendly way to manage menu items, inventory, staff, payments, and more.
 
+## Table of Contents
+
+- [Available Scripts](#available-scripts)
+- [Project Structure](#project-structure)
+- [Team Members](#team-members)
+- [Learn More](#learn-more)
+- [Additional Resources](#additional-resources)
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -48,6 +56,14 @@ The backend is built using Spring Boot and is located in the `tres-backend` dire
 ### Frontend
 
 The frontend is built using React and is located in the `tres-frontend` directory. It provides the user interface for interacting with the platform.
+
+## Team Members
+
+- **Jenette Ephan** - 
+- **Steven Jan Tabungar** - 
+- **Gwyn Sapio** - 
+- **Raven King Pavo** - 
+ 
 
 ## Learn More
 

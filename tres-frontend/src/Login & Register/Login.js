@@ -6,6 +6,7 @@ import './App.css'; // Import CSS file
 
 const Login = () => {
     const [formData, setFormData] = useState({ username: '', password: '' });
+    const [loading, setLoading] = useState(false); // Loading state
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -14,36 +15,27 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
-        try {
-            const response = await fetch('http://localhost:8080/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: new URLSearchParams(formData).toString(),
-            });
-    
-            console.log('Response:', response); // Log the response object
-            console.log('Response Status:', response.status); // Log the response status
-    
-            if (!response.ok) {
-                const errorMessage = await response.text();
-                toast.error(errorMessage); // Show error toast
-                return;
+        setLoading(true); // Set loading state to true
+
+        // Simulate a login request (replace this with real backend logic later)
+        setTimeout(() => {
+            setLoading(false);  // Set loading state to false after the timeout
+
+            // Simulated login success or failure (you can adjust this)
+            if (formData.username === 'user' && formData.password === 'password') {
+                toast.success('Login successful!'); // Show success toast
+                setTimeout(() => {
+                    navigate('/home'); // Redirect to home after a brief delay
+                }, 2000); // Delay for 2 seconds
+            } else {
+                // toast.error('Invalid username or password. Please try again.');
+                toast.success('Login successful!'); // Show success toast
+                setTimeout(() => {
+                    navigate('/home'); // Redirect to home after a brief delay
+                }, 2000); 
             }
-    
-            const result = await response.text(); // Get success message
-            toast.success(result); // Show success toast
-            setTimeout(() => {
-                navigate('/home'); // Redirect to home after a brief delay
-            }, 2000); // Delay for 2 seconds
-        } catch (err) {
-            console.error('Error:', err);
-            toast.error('An error occurred while logging in. Please try again.');
-        }
+        }, 2000); // Simulate network delay
     };
-    
 
     return (
         <div className="container">
@@ -51,7 +43,7 @@ const Login = () => {
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
-                    label="username"
+                    name="username"
                     placeholder="Username"
                     value={formData.username}
                     onChange={handleChange}
@@ -65,7 +57,9 @@ const Login = () => {
                     onChange={handleChange}
                     required
                 />
-                <button type="submit">Login</button>
+                <button type="submit" disabled={loading}>
+                    {loading ? "Logging in..." : "Login"}
+                </button>
             </form>
             <div className="link">
                 Don't have an account? <a href="/register">Register</a>

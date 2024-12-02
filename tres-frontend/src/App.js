@@ -32,6 +32,7 @@ import ChooseRole from './ChooseRole';
 import Choose from './Choose';
 import StockOverview from './StockOverview';
 import MainMenu from './MenuItem/MainMenu';
+import ViewUnavailableMenuItems from './MenuItem/ViewUnavailable';
 // import MenuOrder from './MenuItem/MenuOrder';
 
 const App = () => {
@@ -103,6 +104,7 @@ const App = () => {
         <Route path="/Feedback/feedback" element={<Feedback />} />
         <Route path="/Feedback/feedbacklist" element={<FeedbackList />} />
         <Route path="/stock" element={<StockOverview />} />
+        <Route path="/MenuItem/view-unavailable" element={<ViewUnavailableMenuItems />} />
         {/* <Route path="/mainmenu" element={<MainMenu/>}/> */}
         {/* <Route path="/ordermenu" element={<MenuOrder/>}/> */}
       </Routes>

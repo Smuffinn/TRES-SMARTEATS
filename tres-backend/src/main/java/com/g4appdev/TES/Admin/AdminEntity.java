@@ -12,6 +12,7 @@ public class AdminEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int admin_id;
 
+    private String fullname;
     private String username;
     private String password;
     private String role;
@@ -23,12 +24,25 @@ public class AdminEntity {
     }
 
     // Constructor with all fields
-    public AdminEntity(int admin_id, String username, String password, String role, String email) {
+    public AdminEntity(int admin_id, String fullname, String username, String password, String role, String email) {
         this.admin_id = admin_id;
+        this.fullname=fullname;
         this.username = username;
         this.password = password;
         this.role = role;
         this.email = email;
+    }
+
+    public AdminEntity(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     // Getters and setters

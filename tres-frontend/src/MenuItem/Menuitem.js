@@ -23,12 +23,18 @@ const Menuitem = () => {
     }, [location.state]);
 
     const fetchMenuItems = async () => {
-        const response = await axios.get('http://localhost:8080/tes/menu/getAllMenu');
-        setMenuItems(response.data);
+        try {
+            const response = await axios.get('http://localhost:8080/tes/menu/getAllMenu');
+            setMenuItems(response.data);
+        } catch (error) {
+            console.error("Error fetching menu items:", error);
+        }
     };
+    
 
     const addMenuItem = async (e) => {
         e.preventDefault(); // Prevent default form submission
+        await axios.post('http://localhost:8080/tes/menu/insertMenuEmpty', newItem);
         await axios.post('http://localhost:8080/tes/menu/insertMenu', newItem);
         fetchMenuItems();
         resetForm();
@@ -42,13 +48,17 @@ const Menuitem = () => {
         setEditingItem(null);
     };
 
+    const navigateToViewUnavailable = () => {
+        navigate('/MenuItem/view-unavailable');
+    };
+    
     const navigateToViewAll = () => {
         navigate('/MenuItem/view-all'); 
         navigate('/MenuItem/viewallitems'); 
     };
 
     const resetForm = () => {
-        setNewItem({ item_name: '', price: '', category: '', status: '', image_url: '' });
+        setNewItem({ item_name: '', price: '', category: '', quantity:'', status: '', image_url: '' });
         setEditingItem(null);
     };
 
@@ -79,6 +89,21 @@ const Menuitem = () => {
                     fullWidth
                     margin="normal"
                 />
+                <TextField
+                    id="quantity"
+                    label="Quantity"
+                    value={newItem.quantity}
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        if (/^\d*$/.test(value)) {
+                            setNewItem({ ...newItem, quantity: value });
+                        }
+                    }}
+                    fullWidth
+                    margin="normal"
+                    helperText="Please enter a valid number"
+                />
+
             <FormControl variant="outlined" fullWidth margin="normal">
                 <InputLabel>Select Category</InputLabel>
                 <Select
@@ -145,6 +170,10 @@ const Menuitem = () => {
                 <button type="button" onClick={navigateToViewAll}>
                     View All Items
                 </button>
+                <button type="button" onClick={navigateToViewUnavailable}>
+                   Not Available
+                </button>
+                
             </form>
         </div>
     );

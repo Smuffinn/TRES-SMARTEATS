@@ -18,18 +18,29 @@ public class MenuitemController {
     }
 
     // Create
-    @PostMapping(value = "/insertMenu", consumes = "application/json")
-    public MenuitemEntity insertMenu(@RequestBody MenuitemEntity menu) {
+    @PostMapping(value = "/insertMenuEmpty", consumes = "application/json")
+    public MenuitemEntity insertMenuEmpty(@RequestBody MenuitemEntity menu) {
         return mserv.insertMenu(menu);
     }
+    @PostMapping(value = "/insertMenu", consumes = "application/json")
+    public MenuitemEntity insertMenu(@RequestBody MenuitemEntity menuitem) {
+        return mserv.insertMenu(menuitem);
+    }
+
     
     // Read
     @GetMapping("/getAllMenu")
     public List<MenuitemEntity> getAllMenu() {
         return mserv.getAllMenu();
     }
-    
-
+    @GetMapping("/menu/filter")
+    public List<MenuitemEntity> getMenuByCategory(@RequestParam("category") String category) {
+        return mserv.getMenuItemsByCategory(category);
+    }
+    @GetMapping("/getUnavailableMenu")
+    public List<MenuitemEntity> getUnavailableMenuItems() {
+        return mserv.getUnavailableMenuItems();
+    }
 
     // Update
     @PutMapping("/putMenuitemDetails/{menu_id}")

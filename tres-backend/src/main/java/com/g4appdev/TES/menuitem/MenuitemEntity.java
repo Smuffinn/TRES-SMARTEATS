@@ -27,6 +27,7 @@ public class MenuitemEntity {
 	private double price;
 	private String category;
 	private String status;
+	private int quantity;
 	private String image_url;
 	
 	
@@ -36,6 +37,7 @@ public class MenuitemEntity {
 	private InventoryEntity inventory;
 
 
+
 	public MenuitemEntity() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -43,14 +45,34 @@ public class MenuitemEntity {
 	
 	
 	
-	public MenuitemEntity(int menu_id, String item_name, double price, String category, String status) {
-		super();
+
+	public MenuitemEntity(int menu_id, String item_name, double price, String category, String status, int quantity,
+			String image_url, InventoryEntity inventory) {
 		this.menu_id = menu_id;
 		this.item_name = item_name;
 		this.price = price;
 		this.category = category;
 		this.status = status;
+		this.quantity = quantity;
+		this.image_url = image_url;
+		this.inventory = inventory;
 	}
+
+
+
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+
+
 	public int getMenu_id() {
 		return menu_id;
 	}

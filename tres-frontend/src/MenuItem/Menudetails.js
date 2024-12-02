@@ -1,4 +1,3 @@
-// src/MenuItemDetails.js
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'; // Import useNavigate
 import './App.css'; // Ensure your CSS file is imported

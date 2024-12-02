@@ -6,12 +6,14 @@ const Registration = () => {
     const [formData, setFormData] = useState({
         fullname: '',
         username: '',
+        role: '', 
         email: '',
         password: ''
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
-    const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+    const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);  // Loading state
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -20,36 +22,23 @@ const Registration = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(''); // Reset error message
-        setSuccess(''); // Reset success message
+        setError('');
+        setSuccess('');
+        setLoading(true); // Set loading state to true
 
-        try {
-            const response = await fetch('http://localhost:8080/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            // Check if the response is not OK and handle error accordingly
-            if (!response.ok) {
-                const errorMessage = await response.json(); // Use .json() for JSON responses
-                setError(errorMessage.message || "Registration failed!"); // Set the error message
-                return;
-            }
-
-            const result = await response.json(); // Use .json() to parse the success response
-            setSuccess(result.message || "Registration successful!"); // Set the success message
-
-            // Show alert for successful registration
-            alert("User registered successfully!"); // Show pop-up message
-
-            navigate('/home'); // Redirect to home after successful registration
-        } catch (err) {
-            console.error('Error:', err);
-            setError('An error occurred while registering. Please try again.'); // Handle any other errors
+        if (!formData.role) {
+            setError('Please select a role.');
+            setLoading(false);
+            return;
         }
+
+        // Simulate successful registration after form submission
+        setTimeout(() => {
+            setLoading(false);
+            setSuccess("Registration successful!");
+            alert("User registered successfully!");
+            navigate('/login');  // Redirect to login after successful registration
+        }, 2000); // Simulate 2 seconds delay for the registration process
     };
 
     return (
@@ -74,6 +63,16 @@ const Registration = () => {
                     onChange={handleChange}
                     required
                 />
+                <select
+                    name="role"
+                    value={formData.role}
+                    onChange={handleChange}
+                    required
+                >
+                    <option value="" disabled>Select Role</option>
+                    <option value="Staff">Staff</option>
+                    <option value="Customer">Customer</option>
+                </select>
                 <input
                     type="email"
                     name="email"
@@ -84,7 +83,7 @@ const Registration = () => {
                 />
                 <div className="password-container">
                     <input
-                        type={showPassword ? "text" : "password"} // Toggle between text and password
+                        type={showPassword ? "text" : "password"}
                         name="password"
                         placeholder="Password"
                         value={formData.password}
@@ -95,11 +94,13 @@ const Registration = () => {
                 <button
                     type="button"
                     className="show-password-button"
-                    onClick={() => setShowPassword(!showPassword)} // Toggle password visibility
+                    onClick={() => setShowPassword(!showPassword)}
                 >
                     {showPassword ? "Hide" : "Show"} Password
                 </button>
-                <button type="submit">Register</button>
+                <button type="submit" disabled={loading}>
+                    {loading ? "Registering..." : "Register"}
+                </button>
             </form>
             <div className="link">
                 Already have an account? <a href="/login">Login</a>

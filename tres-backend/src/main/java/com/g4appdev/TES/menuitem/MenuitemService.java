@@ -16,108 +16,110 @@ public class MenuitemService {
     public MenuitemService() {
         super();
     }
+
     public MenuitemEntity insertMenuEmpty(MenuitemEntity menu) {
         if (menu.getQuantity() <= 0) {
             menu.setStatus("Not Available");
         }
         return mirepo.save(menu);
     }
+
     public MenuitemEntity insertMenu(MenuitemEntity menuitem) {
         return mirepo.save(menuitem);
     }
+
     public List<MenuitemEntity> getUnavailableMenuItems() {
         return mirepo.findByStatus("Not Available");
     }
 
-
-  //update  
+    // update
     public MenuitemEntity putMenuitemDetails(int menu_id, MenuitemEntity newMenuitemDetails) {
-        MenuitemEntity existingMenuItem = mirepo.findById(menu_id)
-            .orElseThrow(() -> new NoSuchElementException("Menu item " + menu_id + " not found."));
-        
-        // Update the status based on quantity
-        if (newMenuitemDetails.getQuantity() <= 0) {
-            newMenuitemDetails.setStatus("Not Available");
-        }
-    
-        existingMenuItem.setQuantity(newMenuitemDetails.getQuantity());
-        existingMenuItem.setStatus(newMenuitemDetails.getStatus());
-        existingMenuItem.setItem_name(newMenuitemDetails.getItem_name());
-        existingMenuItem.setPrice(newMenuitemDetails.getPrice());
-        existingMenuItem.setPrice(newMenuitemDetails.getQuantity());
-        existingMenuItem.setCategory(newMenuitemDetails.getCategory());
-        existingMenuItem.setImage_url(newMenuitemDetails.getImage_url());
-    
-        return mirepo.save(existingMenuItem);
+        MenuitemEntity existingMenuitem = mirepo.findById(menu_id)
+                .orElseThrow(() -> new RuntimeException("Menu item not found"));
+
+        // Update fields properly
+        existingMenuitem.setItem_name(newMenuitemDetails.getItem_name());
+        existingMenuitem.setPrice(newMenuitemDetails.getPrice()); // Correct assignment
+        existingMenuitem.setQuantity(newMenuitemDetails.getQuantity());
+        existingMenuitem.setCategory(newMenuitemDetails.getCategory());
+        existingMenuitem.setStatus(newMenuitemDetails.getStatus());
+        existingMenuitem.setImage_url(newMenuitemDetails.getImage_url());
+
+        return mirepo.save(existingMenuitem); // Save updated entity
     }
+
     public List<MenuitemEntity> getAllMenu() {
         return mirepo.findAll().stream()
-                     .filter(item -> item.getQuantity() > 0 && !"Not Available".equalsIgnoreCase(item.getStatus()))
-                     .toList();
+                .filter(item -> item.getQuantity() > 0 && !"Not Available".equalsIgnoreCase(item.getStatus()))
+                .toList();
     }
-    
+
     public List<MenuitemEntity> getMenuItemsByCategory(String category) {
         if ("ALL".equalsIgnoreCase(category)) {
             return getAllMenu();
         }
         return mirepo.findByCategory(category).stream()
-                     .filter(item -> item.getQuantity() > 0 && !"Not Available".equalsIgnoreCase(item.getStatus()))
-                     .toList();
+                .filter(item -> item.getQuantity() > 0 && !"Not Available".equalsIgnoreCase(item.getStatus()))
+                .toList();
     }
-    
 
     // // READ - Get all menu items
     // public List<MenuitemEntity> getAllMenu() {
-    //     List<MenuitemEntity> menuItems = mirepo.findAll();
-    //     // Filter out items with 0 quantity
-    //     menuItems.removeIf(item -> item.getQuantity() == 0);
-    //     return menuItems;
+    // List<MenuitemEntity> menuItems = mirepo.findAll();
+    // // Filter out items with 0 quantity
+    // menuItems.removeIf(item -> item.getQuantity() == 0);
+    // return menuItems;
     // }
     // READ - Get all menu items
-// public List<MenuitemEntity> getAllMenu() {
-//     List<MenuitemEntity> menuItems = mirepo.findAll();
-//     // Filter out items with 0 quantity or status "Not Available"
-//     menuItems.removeIf(item -> item.getQuantity() <= 0 || "Not Available".equalsIgnoreCase(item.getStatus()));
-//     return menuItems;
-// }
+    // public List<MenuitemEntity> getAllMenu() {
+    // List<MenuitemEntity> menuItems = mirepo.findAll();
+    // // Filter out items with 0 quantity or status "Not Available"
+    // menuItems.removeIf(item -> item.getQuantity() <= 0 || "Not
+    // Available".equalsIgnoreCase(item.getStatus()));
+    // return menuItems;
+    // }
 
     // // READ - Filter menu items by category
     // public List<MenuitemEntity> getMenuItemsByCategory(String category) {
-    //     // If "ALL" category is selected, return all menu items
-    //     if ("ALL".equalsIgnoreCase(category)) {
-    //         return getAllMenu();
-    //     }
-    //     // Otherwise, filter by the category and remove items with 0 quantity
-    //     List<MenuitemEntity> menuItems = mirepo.findByCategory(category);
-    //     menuItems.removeIf(item -> item.getQuantity() == 0); // Exclude items with 0 quantity
-    //     return menuItems;
+    // // If "ALL" category is selected, return all menu items
+    // if ("ALL".equalsIgnoreCase(category)) {
+    // return getAllMenu();
     // }
-    
-// READ - Filter menu items by category
-// public List<MenuitemEntity> getMenuItemsByCategory(String category) {
-//     if ("ALL".equalsIgnoreCase(category)) {
-//         return getAllMenu();
-//     }
-//     List<MenuitemEntity> menuItems = mirepo.findByCategory(category);
-//     menuItems.removeIf(item -> item.getQuantity() <= 0 || "Not Available".equalsIgnoreCase(item.getStatus()));
-//     return menuItems;
-// }
+    // // Otherwise, filter by the category and remove items with 0 quantity
+    // List<MenuitemEntity> menuItems = mirepo.findByCategory(category);
+    // menuItems.removeIf(item -> item.getQuantity() == 0); // Exclude items with 0
+    // quantity
+    // return menuItems;
+    // }
+
+    // READ - Filter menu items by category
+    // public List<MenuitemEntity> getMenuItemsByCategory(String category) {
+    // if ("ALL".equalsIgnoreCase(category)) {
+    // return getAllMenu();
+    // }
+    // List<MenuitemEntity> menuItems = mirepo.findByCategory(category);
+    // menuItems.removeIf(item -> item.getQuantity() <= 0 || "Not
+    // Available".equalsIgnoreCase(item.getStatus()));
+    // return menuItems;
+    // }
 
     // UPDATE
-    // public MenuitemEntity putMenuitemDetails(int menu_id, MenuitemEntity newMenuitemDetails) {
-    //     // Check if the menu item exists
-    //     MenuitemEntity existingMenuItem = mirepo.findById(menu_id)
-    //         .orElseThrow(() -> new NoSuchElementException("Menu item " + menu_id + " not found."));
+    // public MenuitemEntity putMenuitemDetails(int menu_id, MenuitemEntity
+    // newMenuitemDetails) {
+    // // Check if the menu item exists
+    // MenuitemEntity existingMenuItem = mirepo.findById(menu_id)
+    // .orElseThrow(() -> new NoSuchElementException("Menu item " + menu_id + " not
+    // found."));
 
-    //     // Update details
-    //     existingMenuItem.setItem_name(newMenuitemDetails.getItem_name());
-    //     existingMenuItem.setPrice(newMenuitemDetails.getPrice());
-    //     existingMenuItem.setCategory(newMenuitemDetails.getCategory());
-    //     existingMenuItem.setStatus(newMenuitemDetails.getStatus());
-    //     existingMenuItem.setImage_url(newMenuitemDetails.getImage_url());
-    //     existingMenuItem.setQuantity(newMenuitemDetails.getQuantity()); 
+    // // Update details
+    // existingMenuItem.setItem_name(newMenuitemDetails.getItem_name());
+    // existingMenuItem.setPrice(newMenuitemDetails.getPrice());
+    // existingMenuItem.setCategory(newMenuitemDetails.getCategory());
+    // existingMenuItem.setStatus(newMenuitemDetails.getStatus());
+    // existingMenuItem.setImage_url(newMenuitemDetails.getImage_url());
+    // existingMenuItem.setQuantity(newMenuitemDetails.getQuantity());
 
-    //     return mirepo.save(existingMenuItem);
+    // return mirepo.save(existingMenuItem);
     // }
 
     // DELETE

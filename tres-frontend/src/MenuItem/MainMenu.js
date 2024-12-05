@@ -3,18 +3,31 @@ import './MainMenu.css';
 import logo1 from '../white_background.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { IconButton } from '@mui/material';
+import { IconButton, TextField, FormControl, Select, MenuItem, InputLabel, Button } from '@mui/material';
 
 const MainMenu = () => {
   const [menuItems, setMenuItems] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [category, setCategory] = useState('All'); // State to track selected category
+  const [category, setCategory] = useState('All');
+  const [orderDetails, setOrderDetails] = useState({
+    orderId: '', 
+    customerName: '', 
+    orderDate: new Date().toISOString().split('T')[0], 
+    orderTime: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
+    totalAmount: 0,
+  });
+  const [paymentDetails, setPaymentDetails] = useState({
+    paymentId: '', 
+    paymentMethod: '', 
+    paymentDate: new Date().toISOString().split('T')[0],
+    status: 'Pending', // Default payment status
+    amount: 0
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchMenuItems();
-  }, [category]); // Fetch menu items when category changes
+  }, [category]);
 
   const fetchMenuItems = async () => {
     try {
@@ -22,28 +35,12 @@ const MainMenu = () => {
       if (category === 'All') {
         setMenuItems(response.data);
       } else {
-        setMenuItems(response.data.filter(item => item.category === category)); // Filter by category
+        setMenuItems(response.data.filter(item => item.category === category));
       }
     } catch (error) {
       console.error('Error fetching menu items:', error);
     }
   };
-
-  const deleteMenuItem = async (menu_id) => {
-    if (window.confirm("Are you sure you want to delete this menu item?")) {
-      try {
-        await axios.delete(`http://localhost:8080/tes/menu/deleteMenuitem/${menu_id}`);
-        alert("Menu item deleted successfully.");
-        fetchMenuItems(); // Refresh the menu list after deletion
-      } catch (error) {
-        console.error('Error deleting menu item:', error);
-        alert("Failed to delete menu item. Please try again.");
-      }
-    }
-  };
-
-
-
 
   const toggleSelectMenuItem = (item) => {
     const itemIndex = selectedItems.findIndex(i => i.menu_id === item.menu_id);
@@ -51,8 +48,11 @@ const MainMenu = () => {
       setSelectedItems(selectedItems.filter((_, index) => index !== itemIndex));
     } else {
       setSelectedItems([...selectedItems, { ...item, quantity: 1 }]);
+      
     }
   };
+
+  
 
   const changeQuantity = (itemId, increment) => {
     setSelectedItems(prevItems => prevItems.map(item => {
@@ -66,25 +66,66 @@ const MainMenu = () => {
     }));
   };
 
-  const viewSelectedItemsDetails = () => {
-    // Navigate to the MenuItemDetails page and pass the selected items
-    const selectedItemsDetails = menuItems.filter(item => selectedItems.some(selected => selected.menu_id === item.menu_id));
-    navigate('/MenuItem/MenuItemDetails', { state: { items: selectedItemsDetails } });
-  };
-
-  const startOver = () => {
-    setSelectedItems([]);
-  };
-
   const handleCategoryChange = (selectedCategory) => {
     setCategory(selectedCategory);
   };
 
-  const generatePlaceholders = (items, perRow) => {
-    const placeholdersNeeded = perRow - (items.length % perRow || perRow);
-    return Array.from({ length: placeholdersNeeded }, (_, index) => (
-      <div className="menu-card placeholder" key={`placeholder-${index}`} />
-    ));
+  const handleOrderChange = (e) => {
+    const { name, value } = e.target;
+    setOrderDetails({
+      ...orderDetails,
+      [name]: value
+    });
+  };
+
+  const handlePaymentChange = (e) => {
+    const { name, value } = e.target;
+    setPaymentDetails({
+      ...paymentDetails,
+      [name]: value
+    });
+  };
+
+  const handleSubmit = async () => {
+    // Prepare the full order and payment data
+    const totalAmount = selectedItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+    const newOrder = {
+      ...orderDetails,
+      totalAmount: totalAmount,
+    };
+    const newPayment = {
+      ...paymentDetails,
+      amount: totalAmount,
+    };
+
+    try {
+      // Send both order and payment data to respective lists
+      await axios.post('http://localhost:8080/api/orders/postOrder', newOrder);
+      await axios.post('http://localhost:8080/api/payments/postPayment', newPayment);
+      
+      // Redirect to a confirmation page or another desired page after submission
+      navigate('/Confirmation');
+    } catch (error) {
+      console.error('Error saving order and payment:', error);
+    }
+  };
+
+  const startOver = () => {
+    setSelectedItems([]);
+    setOrderDetails({
+      orderId: '',
+      customerName: '',
+      orderDate: new Date().toISOString().split('T')[0],
+      orderTime: new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
+      totalAmount: 0
+    });
+    setPaymentDetails({
+      paymentId: '',
+      paymentMethod: '',
+      paymentDate: new Date().toISOString().split('T')[0],
+      status: 'Pending',
+      amount: 0
+    });
   };
 
   return (
@@ -118,24 +159,21 @@ const MainMenu = () => {
                   />
                   <h3>{item.item_name}</h3>
                   <p>Price: ₱{item.price.toFixed(2)}</p>
-                  <p>Quantity: {item.quantity}</p>
-                  <p>Status: {item.quantity === 0 ? 'Not Available' : item.status}</p>
                 </div>
               ))}
-              {generatePlaceholders(menuItems, 3)} {/* Ensures the grid remains steady */}
             </div>
           </div>
 
-          {selectedItems.length > 0 && (
+          {selectedItems.length >= 0 && (
             <div className="order-summary">
               <h2>Order Summary</h2>
+
               <table>
                 <thead>
                   <tr>
                     <th>Item Name</th>
                     <th>Quantity</th>
                     <th>Price</th>
-                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -148,29 +186,85 @@ const MainMenu = () => {
                         <button onClick={() => changeQuantity(item.menu_id, true)}>+</button>
                       </td>
                       <td>₱{(item.price * item.quantity).toFixed(2)}</td>
-                      <td>
-                      <IconButton 
-                    onClick={() => deleteMenuItem(item.menu_id)} 
-                    color="error"
-                  >                    
-                  <DeleteIcon />
-                  </IconButton>
-                      </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
 
-              {/* Total Summary */}
-              <div className="total-summary">
-                <p>Overall Total:₱{selectedItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</p>
+              <div className="order-summary-fields">
+                <TextField
+                  label="Order ID"
+                  value={orderDetails.orderId}
+                  disabled
+                  style={{ border: 'none', backgroundColor: '#f9f9f9', padding: '8px', fontSize: '1rem', borderRadius: '5px' }}
+                />
+                <TextField
+                  label="Order Date"
+                  value={orderDetails.orderDate}
+                  disabled
+                  style={{ border: 'none', backgroundColor: '#f9f9f9', padding: '8px', fontSize: '1rem', borderRadius: '5px' }}
+                />
+                <TextField
+                  label="Order Time"
+                  value={orderDetails.orderTime}
+                  disabled
+                  style={{ border: 'none', backgroundColor: '#f9f9f9', padding: '8px', fontSize: '1rem', borderRadius: '5px' }}
+                />
+                <TextField
+                  label="Total Amount"
+                  value={selectedItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}
+                  disabled
+                  style={{ border: 'none', backgroundColor: '#f9f9f9', padding: '8px', fontSize: '1rem', borderRadius: '5px' }}
+                />
               </div>
 
-              <div className="order-actions">
-                <button onClick={viewSelectedItemsDetails} disabled={selectedItems.length === 0}>Checkout</button>
-                <button onClick={startOver}>Start Over</button>
+              <div className="payment-details">
+
+                <TextField
+                  label="Payment Status"
+                  value={paymentDetails.status}
+                  disabled
+                  style={{ border: 'none', backgroundColor: '#f9f9f9', padding: '8px', fontSize: '1rem', borderRadius: '5px', maxWidth: '100%'
+                  }}
+                />
+                <TextField
+                  label="Payment Amount"
+                  value={selectedItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}
+                  disabled
+                  style={{ border: 'none', backgroundColor: '#f9f9f9', padding: '8px', fontSize: '1rem', borderRadius: '5px' }}
+                />
+              </div>
+              <TextField
+                    label="Customer Name"
+                    name="customerName"
+                    value={orderDetails.customerName}
+                    onChange={handleOrderChange}
+                    required
+                    style={{ border: 'none', backgroundColor: '#f9f9f9', padding: '8px', fontSize: '1rem', borderRadius: '5px' }}
+                />
+                <FormControl variant="outlined" fullWidth margin="normal">
+                  <InputLabel>Select Payment Method</InputLabel>
+                  <Select
+                    name="paymentMethod"
+                    value={paymentDetails.paymentMethod}
+                    onChange={handlePaymentChange}
+                    required
+                    style={{ border: 'none', backgroundColor: '#f9f9f9', padding: '8px', fontSize: '1rem', borderRadius: '5px' }}
+                  >
+                    <MenuItem value="Cash">Cash</MenuItem>
+                    <MenuItem value="GCASH">GCASH</MenuItem>
+                    <MenuItem value="Paypal">Paypal</MenuItem>
+                    <MenuItem value="Credit Card">Credit Card</MenuItem>
+                  </Select>
+                </FormControl>
+
+              <div className="buttons">
+                <Button variant="contained" color="primary" onClick={handleSubmit}>Submit Order</Button>
+                <Button variant="outlined" color="secondary" onClick={startOver}>Cancel</Button>
               </div>
             </div>
+
+
           )}
         </div>
       </div>

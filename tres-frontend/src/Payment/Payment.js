@@ -66,6 +66,7 @@ const Payment = () => {
               required
             >
               <MenuItem value="" disabled>Select Payment Method</MenuItem>
+              <MenuItem value="Cash">Cash</MenuItem>
               <MenuItem value="GCASH">GCASH</MenuItem>
               <MenuItem value="Paypal">Paypal</MenuItem>
               <MenuItem value="Credit Card">Credit Card</MenuItem>

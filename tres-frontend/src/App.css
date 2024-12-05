@@ -728,9 +728,10 @@ textarea {
 
 .choose-role-container {
   display: flex;
-  min-height: 100vh;
+  flex: 1;
+  height: 100vh;
+  min-width: 100%;
   background-color: #f4f4f4;
-  margin: 20;
 }
 .choose-role-content{
   background-color: #800000;
@@ -747,7 +748,8 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: auto;
+  height: 100vh;
+  min-width: 100%;
 /* Optional background for contrast */
 }
 
@@ -783,21 +785,14 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  align-items: center; /* Center-aligns buttons within the card */
+  padding: 10px; /* Adds padding inside the button group */
+  box-sizing: border-box; /* Ensures padding doesn't affect overall size */
 }
 
-.role-customer {
-  width: 302px;
-  padding: 10px;
-  font-size: 18px;
-    color: white;
-  background-color: gold;
-  border: none;
-  border-radius:25px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.role-staff {
-  width: 302px;
+.role-customer, .role-staff {
+  max-width: 100%; /* Ensures the button width doesn't exceed container width */
+  width: 200px; /* Makes the buttons responsive to container size */
   padding: 10px;
   font-size: 18px;
   color: white;
@@ -806,6 +801,7 @@ h2 {
   border-radius: 25px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
 }
 
 .role-staff:hover {
@@ -844,9 +840,9 @@ h2 {
 
 .option-image {
   width: 150px; /* Adjust based on your image size */
-height: auto;
-cursor: pointer;
-transition: transform 0.3s ease; /* Smooth scaling on hover */
+  height: 150px;
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Smooth scaling on hover */
 }
 
 /* .option-image:hover {

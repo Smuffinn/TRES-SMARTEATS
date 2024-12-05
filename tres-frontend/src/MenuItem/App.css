@@ -1,4 +1,45 @@
-/* src/App.css */
+/*src/App.css */
+
+.menu-layout {
+  display: flex;
+  height: 100vh;
+}
+
+.menu-sidebar {
+  width: 20%;
+  background-color: #f8f9fa;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.menu-content {
+  width: 60%;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.menu-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.menu-card {
+  width: calc(33.33% - 10px);
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.menu-card img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
 
 div nav {
   background-color: MAROON;

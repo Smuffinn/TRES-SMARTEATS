@@ -68,7 +68,7 @@ const App = () => {
           <Link to="/about" className={isActive('/about') ? 'active' : ''}>About Us</Link>
           {/* <Link to="/accountsettings" className={isActive('/accountsettings') ? 'active' : ''}>Account Settings</Link> */}
           <Link to="/Feedback/feedback" className={isActive('/Feedback/feedback') ? 'active' : ''}>Feedback</Link>
-          {/* <Link to="/DataAnalytics/DataAnalytics" className={isActive('/DataAnalytics/DataAnalytics') ? 'active' : ''}>Data Analytics</Link> */}
+          <Link to="/MenuItem/MenuitemAnalytics" className={isActive('/MenuItem/MenuitemAnalytics') ? 'active' : ''}>Data Analytics</Link>
           {/* <Link to="/stock" className={isActive('/stock') ? 'active' : ''}>Stock Overview</Link> */}
           {/* <Link to="/mainmenu" className={isActive('/mainmenu') ? 'active' : ''}>Main Menu</Link> */}
 
@@ -98,6 +98,9 @@ const App = () => {
         <Route path="/studentlist" element={<StudentList />} />
         <Route path="/MenuItem/view-menu" element={<MainMenu />} />
         <Route path="/MenuItem/menuitemdetails" element={<MenuItemDetails />} />
+
+        <Route path="/MenuItem/MenuitemAnalytics" element={<MenuItemAnalytics />} />
+
         <Route path="/about" element={<About />} />
         <Route path="/analytics" element={<MenuItemAnalytics />} />
         <Route path="/accountsettings" element={<AccountSettings />} />

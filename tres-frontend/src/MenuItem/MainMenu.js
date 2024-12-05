@@ -135,13 +135,40 @@ const MainMenu = () => {
           <img src={logo1} alt="CITU - SMART EATS Logo" className="logo" />
         </Link>
         <div className="content-wrapper">
-          <div className='nav-sidebar'>
-            <button onClick={() => handleCategoryChange('All')}>All</button>
-            <button onClick={() => handleCategoryChange('Drinks')}>Drinks</button>
-            <button onClick={() => handleCategoryChange('Meals')}>Meals</button>
-            <button onClick={() => handleCategoryChange('Snacks')}>Snacks</button>
-            <button onClick={() => handleCategoryChange('Desserts')}>Desserts</button>
-          </div>
+        
+        <div className='nav-sidebar'>
+          <button onClick={() => handleCategoryChange('All')}>
+            <div className='button-content'>
+              <img src='/navsidebarpics/all.png' alt='All' className='category-icon' />
+              <span className='category-text'>All</span>
+            </div>
+          </button>
+          <button onClick={() => handleCategoryChange('Drinks')}>
+            <div className='button-content'>
+              <img src='/navsidebarpics/drinks.png' alt='Drinks' className='category-icon' />
+              <span className='category-text'>Drinks</span>
+            </div>
+          </button>
+          <button onClick={() => handleCategoryChange('Meals')}>
+            <div className='button-content'>
+              <img src='/navsidebarpics/meals.png' alt='Meals' className='category-icon' />
+              <span className='category-text'>Meals</span>
+            </div>
+          </button>
+          <button onClick={() => handleCategoryChange('Snacks')}>
+            <div className='button-content'>
+              <img src='/navsidebarpics/snakcs.png' alt='Snacks' className='category-icon' />
+              <span className='category-text'>Snacks</span>
+            </div>
+          </button>
+          <button onClick={() => handleCategoryChange('Desserts')}>
+            <div className='button-content'>
+              <img src='/navsidebarpics/desserts.png' alt='Desserts' className='category-icon' />
+              <span className='category-text'>Desserts</span>
+            </div>
+          </button>
+        </div>
+
 
           <div className="menu-container">
             <div className="menu-cards">

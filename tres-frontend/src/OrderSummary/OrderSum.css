@@ -1,0 +1,103 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: antiquewhite;
+  }
+  
+  /* Order Summary Container */
+  .order-summary-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* background-color: #fff; */
+  }
+  
+  /* Header Styles */
+  .order-summary-header {
+    background-color: #800000; /* Maroon */
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    color: white;
+  }
+  
+  .order-summary-header .logo img {
+    height: 50px;
+  }
+  
+  .order-summary-title h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+  
+  /* Body Styles */
+  .order-summary-body {
+    background-color: #ffeb3b; /* Yellow */
+    width: 90%;
+    max-width: 800px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+  }
+  
+  .order-details p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+  
+  .order-items h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .order-items ul {
+    list-style-type: none;
+    margin-bottom: 20px;
+  }
+  
+  .order-items li {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+  
+  .total h4 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  /* Footer Styles */
+  .order-footer {
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  .order-footer p {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+  
+  .order-footer button {
+    background-color: #17171733;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .order-footer button:hover {
+    background-color: #800000; 
+  }
+  

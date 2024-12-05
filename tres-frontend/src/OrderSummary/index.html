@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartEats Order Summary</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <img src="logo.png" alt="SmartEats Logo" class="logo">
+    <nav class="nav">
+      <a href="#about-us">About us</a>
+    </nav>
+  </header>
+
+  <main class="content">
+    <h1 class="order-number">Order number: <span id="order-number">07</span></h1>
+    <p class="order-details">
+      Order Date: <span id="order-date"></span><br>
+      Order Time: <span id="order-time"></span>
+    </p>
+    <h2 class="success-message">Order Placed Successfully!</h2>
+    <p class="instructions">Please proceed to the counter to make your payment.</p>
+
+    <div class="order-summary-box">
+      <h3>TAKEOUT</h3>
+      <div id="order-items">
+        <!-- Items will be added dynamically here -->
+      </div>
+      <div class="total">
+        <p>Total:</p>
+        <p id="total-price">₱100.00</p>
+      </div>
+    </div>
+
+    <p class="enjoy">Enjoy your meal!</p>
+
+    <button class="start-over-btn" onclick="startOver()">Start Over</button>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

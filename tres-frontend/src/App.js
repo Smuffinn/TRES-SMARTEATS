@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Route, Routes, useLocation } from 'react-router-dom';
+import { Link, Route, Routes, useLocation, Navigate } from 'react-router-dom';
 import MenuItem from './MenuItem/Menuitem';
 import Inventory from './Inventory/Inventory';
 import ViewAllItems from './MenuItem/Viewallitems';
@@ -34,6 +34,8 @@ import StockOverview from './StockOverview';
 import MainMenu from './MenuItem/MainMenu';
 import ViewUnavailableMenuItems from './MenuItem/ViewUnavailable';
 import OrderSummary from './OrderSummary/OrderSum';
+import ConfirmationPage from './MenuItem/ConfirmationPage';
+import StaffDashboard from './Staff/StaffDashboard';
 // import MenuOrder from './MenuItem/MenuOrder';
 
 const App = () => {
@@ -90,8 +92,17 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/Payment/payment" element={<Payment paymentData={paymentData} setPaymentData={setPaymentData} />} />
         <Route path="/Payment/payment-list" element={<PaymentList payments={paymentData} />} />
-        <Route path="/Staff/staff" element={<Staff staffData={staffData} setStaffData={setStaffData} />} />
-        <Route path="/Staff/staff-list" element={<StaffList />} />
+        <Route path="/Staff/staff" element={<Staff />} />
+        <Route path="/Staff/dashboard" element={
+          <PrivateRoute>
+            <StaffDashboard />
+          </PrivateRoute>
+        } />
+        <Route path="/Staff/staff-list" element={
+          <PrivateRoute>
+            <StaffList />
+          </PrivateRoute>
+        } />
         <Route path="/Student/student" element={<Student />} />
         <Route path="/Order/order" element={<Order />} />
         <Route path="/Order/order-list" element={<OrderList />} />
@@ -110,11 +121,18 @@ const App = () => {
         <Route path="/stock" element={<StockOverview />} />
         <Route path="/MenuItem/view-unavailable" element={<ViewUnavailableMenuItems />} />
         <Route path="/order-summary" element={<OrderSummary />} />
+        <Route path="/confirmation" element={<ConfirmationPage />} />
         {/* <Route path="/mainmenu" element={<MainMenu/>}/> */}
         {/* <Route path="/ordermenu" element={<MenuOrder/>}/> */}
       </Routes>
     </div>
   );
+};
+
+// Add this component for protected routes
+const PrivateRoute = ({ children }) => {
+  const token = localStorage.getItem('token');
+  return token ? children : <Navigate to="/Staff/staff" />;
 };
 
 export default App;

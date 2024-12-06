@@ -1,36 +1,54 @@
 package com.g4appdev.TES.Staff;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
+import java.util.Date;
 
 @Entity
 public class Staff {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long staffId;
+    @Column(name = "staff_id") // Update column name to staff_id
+    private int staffId;
 
-    
+    @NotBlank
     private String name;
 
-   
-    private String role;
-
-    
-    private String contactNumber;
-
-    
-    private String schedule;
-
-    
+    @Email
+    @NotBlank
     private String email;
 
-    // Getters and Setters
-    public Long getStaffId() {
+    @NotBlank
+    private String password;
+
+    @NotBlank
+    private String role;
+
+    @Pattern(regexp = "^[0-9]{11}$")
+    private String contactNumber;
+
+    @Column(name = "schedule")
+    private Date schedule;
+
+    public Staff() {
+    }
+
+    public Staff(int id, String name, String role, String contactNumber, Date schedule) {
+        this.staffId = id;
+        this.name = name;
+        this.role = role;
+        this.contactNumber = contactNumber;
+        this.schedule = schedule;
+    }
+
+    public int getStaffId() {
         return staffId;
     }
 
-    public void setStaffId(Long staffId) {
+    public void setStaffId(int staffId) {
         this.staffId = staffId;
     }
 
@@ -58,11 +76,11 @@ public class Staff {
         this.contactNumber = contactNumber;
     }
 
-    public String getSchedule() {
+    public Date getSchedule() {
         return schedule;
     }
 
-    public void setSchedule(String schedule) {
+    public void setSchedule(Date schedule) {
         this.schedule = schedule;
     }
 
@@ -72,5 +90,13 @@ public class Staff {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

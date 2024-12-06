@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './MainMenu.css';
+import './MenuItem.css';
+import './App.css';
 import logo1 from '../white_background.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -23,6 +25,7 @@ const MainMenu = () => {
     status: 'Pending', // Default payment status
     amount: 0
   });
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -87,7 +90,23 @@ const MainMenu = () => {
   };
 
   const handleSubmit = async () => {
-    // Prepare the full order and payment data
+    // Validate required fields
+    const newErrors = {};
+    if (!orderDetails.customerName.trim()) {
+      newErrors.customerName = 'Customer name is required';
+    }
+    if (!paymentDetails.paymentMethod) {
+      newErrors.paymentMethod = 'Payment method is required';
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    // Clear any previous errors
+    setErrors({});
+
     const totalAmount = selectedItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
     const newOrder = {
       ...orderDetails,
@@ -99,14 +118,43 @@ const MainMenu = () => {
     };
 
     try {
-      // Send both order and payment data to respective lists
-      await axios.post('http://localhost:8080/api/orders/postOrder', newOrder);
-      await axios.post('http://localhost:8080/api/payments/postPayment', newPayment);
+      // First, post the order and get the response
+      const orderResponse = await axios.post('http://localhost:8080/api/orders/postOrder', newOrder);
       
-      // Redirect to a confirmation page or another desired page after submission
-      navigate('/Confirmation');
+      // Log the entire response to see its structure
+      console.log('Full Order Response:', orderResponse);
+      
+      // Assuming the order ID is in the response data
+      // Update this line based on your actual API response structure
+      const orderId = orderResponse.data.id || orderResponse.data.orderId || orderResponse.data;
+      
+      console.log('Extracted Order ID:', orderId);
+
+      // Create the final order details with the order ID
+      const finalOrderDetails = {
+        ...orderDetails,
+        orderId: orderId,
+        customerName: orderDetails.customerName,
+        orderDate: orderDetails.orderDate,
+        orderTime: orderDetails.orderTime,
+        totalAmount: totalAmount
+      };
+
+      console.log('Final Order Details:', finalOrderDetails);
+
+      // Post payment details
+      await axios.post('http://localhost:8080/api/payments/postPayment', newPayment);
+
+      // Navigate with complete order details
+      navigate('/confirmation', { 
+        state: { 
+          orderDetails: finalOrderDetails,
+          paymentDetails: newPayment
+        }
+      });
     } catch (error) {
-      console.error('Error saving order and payment:', error);
+      console.error('Error in order submission:', error);
+      console.error('Error response:', error.response);
     }
   };
 
@@ -193,105 +241,103 @@ const MainMenu = () => {
 
           {selectedItems.length >= 0 && (
             <div className="order-summary">
-              <h2>Order Summary</h2>
-
-              <table>
-                <thead>
-                  <tr>
-                    <th>Item Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {selectedItems.map(item => (
-                    <tr key={item.menu_id}>
-                      <td>{item.item_name}</td>
-                      <td>
-                        <button onClick={() => changeQuantity(item.menu_id, false)}>-</button>
-                        <p>{item.quantity}</p>
-                        <button onClick={() => changeQuantity(item.menu_id, true)}>+</button>
-                      </td>
-                      <td>₱{(item.price * item.quantity).toFixed(2)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
-              <div className="order-summary-fields">
-                <TextField
-                  label="Order ID"
-                  value={orderDetails.orderId}
-                  disabled
-                  style={{ border: 'none', backgroundColor: '#f9f9f9', padding: '8px', fontSize: '1rem', borderRadius: '5px' }}
-                />
-                <TextField
-                  label="Order Date"
-                  value={orderDetails.orderDate}
-                  disabled
-                  style={{ border: 'none', backgroundColor: '#f9f9f9', padding: '8px', fontSize: '1rem', borderRadius: '5px' }}
-                />
-                <TextField
-                  label="Order Time"
-                  value={orderDetails.orderTime}
-                  disabled
-                  style={{ border: 'none', backgroundColor: '#f9f9f9', padding: '8px', fontSize: '1rem', borderRadius: '5px' }}
-                />
-                <TextField
-                  label="Total Amount"
-                  value={selectedItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}
-                  disabled
-                  style={{ border: 'none', backgroundColor: '#f9f9f9', padding: '8px', fontSize: '1rem', borderRadius: '5px' }}
-                />
+              <h2 className="summary-title">Order Summary</h2>
+              
+              <div className="selected-items-container">
+                {selectedItems.length === 0 ? (
+                  <p className="no-items">No items selected</p>
+                ) : (
+                  <table className="items-table">
+                    <thead>
+                      <tr>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {selectedItems.map(item => (
+                        <tr key={item.menu_id}>
+                          <td>{item.item_name}</td>
+                          <td>₱{item.price.toFixed(2)}</td>
+                          <td className="quantity-cell">
+                            <button 
+                              className="quantity-btn"
+                              onClick={() => changeQuantity(item.menu_id, false)}
+                            >
+                              −
+                            </button>
+                            <span className="quantity-value">{item.quantity}</span>
+                            <button 
+                              className="quantity-btn"
+                              onClick={() => changeQuantity(item.menu_id, true)}
+                            >
+                              +
+                            </button>
+                          </td>
+                          <td>₱{(item.price * item.quantity).toFixed(2)}</td>
+                        </tr>
+                      ))}
+                      <tr className="total-row">
+                        <td colSpan="3">Total Amount:</td>
+                        <td>₱{selectedItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                )}
               </div>
 
-              <div className="payment-details">
+              <div className="order-details-grid">
+                <TextField
+                  label="Customer Name"
+                  name="customerName"
+                  value={orderDetails.customerName}
+                  onChange={handleOrderChange}
+                  required
+                  error={!!errors.customerName}
+                  helperText={errors.customerName}
+                  fullWidth
+                  className="order-input"
+                />
 
-                <TextField
-                  label="Payment Status"
-                  value={paymentDetails.status}
-                  disabled
-                  style={{ border: 'none', backgroundColor: '#f9f9f9', padding: '8px', fontSize: '1rem', borderRadius: '5px', maxWidth: '100%'
-                  }}
-                />
-                <TextField
-                  label="Payment Amount"
-                  value={selectedItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}
-                  disabled
-                  style={{ border: 'none', backgroundColor: '#f9f9f9', padding: '8px', fontSize: '1rem', borderRadius: '5px' }}
-                />
-              </div>
-              <TextField
-                    label="Customer Name"
-                    name="customerName"
-                    value={orderDetails.customerName}
-                    onChange={handleOrderChange}
-                    required
-                    style={{ border: 'none', backgroundColor: '#f9f9f9', padding: '8px', fontSize: '1rem', borderRadius: '5px' }}
-                />
-                <FormControl variant="outlined" fullWidth margin="normal">
-                  <InputLabel>Select Payment Method</InputLabel>
+                <FormControl fullWidth error={!!errors.paymentMethod} className="order-input">
+                  <InputLabel>Payment Method</InputLabel>
                   <Select
                     name="paymentMethod"
                     value={paymentDetails.paymentMethod}
                     onChange={handlePaymentChange}
                     required
-                    style={{ border: 'none', backgroundColor: '#f9f9f9', padding: '8px', fontSize: '1rem', borderRadius: '5px' }}
                   >
                     <MenuItem value="Cash">Cash</MenuItem>
                     <MenuItem value="GCASH">GCASH</MenuItem>
                     <MenuItem value="Paypal">Paypal</MenuItem>
                     <MenuItem value="Credit Card">Credit Card</MenuItem>
                   </Select>
+                  {errors.paymentMethod && (
+                    <div className="error-message">{errors.paymentMethod}</div>
+                  )}
                 </FormControl>
+              </div>
 
-              <div className="buttons">
-                <Button variant="contained" color="primary" onClick={handleSubmit}>Submit Order</Button>
-                <Button variant="outlined" color="secondary" onClick={startOver}>Cancel</Button>
+              <div className="order-actions">
+                <Button 
+                  variant="contained" 
+                  color="primary" 
+                  onClick={handleSubmit}
+                  disabled={selectedItems.length === 0}
+                >
+                  Place Order
+                </Button>
+                <Button 
+                  variant="outlined" 
+                  color="secondary" 
+                  onClick={startOver}
+                >
+                  Clear Order
+                </Button>
               </div>
             </div>
-
-
           )}
         </div>
       </div>

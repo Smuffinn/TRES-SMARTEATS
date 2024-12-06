@@ -1,0 +1,99 @@
+.staff-container {
+    max-width: 800px;  /* Increased from 600px */
+    min-height: 80vh;  /* Added to ensure vertical centering */
+    margin: 20px auto;
+    padding: 50px;     /* Increased from 30px */
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.staff-title {
+    color: #8b0000;
+    text-align: center;
+    margin-bottom: 40px;  /* Increased from 30px */
+    font-size: 3rem;      /* Increased from 2.5rem */
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.staff-tabs {
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 40px;  /* Increased from 30px */
+}
+
+.staff-form {
+    padding: 30px;        /* Increased from 20px */
+    border-radius: 15px;
+    background-color: white;
+    width: 100%;
+    max-width: 600px;     /* Added to control form width */
+    margin: 0 auto;       /* Center the form */
+}
+
+.form-field {
+    margin-bottom: 25px !important;  /* Increased from 20px */
+}
+
+.submit-button {
+    margin-top: 30px !important;     /* Increased from 20px */
+    padding: 12px 0 !important;
+    font-size: 1.1rem !important;
+    background-color: #8b0000 !important;
+    transition: all 0.3s ease !important;
+    height: 50px !important;         /* Added fixed height */
+}
+
+.submit-button:hover {
+    background-color: #660000 !important;
+    transform: translateY(-2px);
+}
+
+.error-message,
+.success-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 0 auto 30px;
+    max-width: 80%;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.success-message {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 0 auto 30px;
+    max-width: 80%;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+/* Animation for form transitions */
+.form-animate {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Add spacing between form fields */
+.MuiTextField-root {
+    margin-bottom: 20px !important;
+}

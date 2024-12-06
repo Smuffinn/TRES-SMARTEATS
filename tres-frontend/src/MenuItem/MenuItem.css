@@ -4,13 +4,14 @@
     justify-content: center;
     gap: 10px;
     margin-top: 20px;
+    padding: 10px;
 }
 
 .pagination button {
-    padding: 8px 8px;
+    padding: 8px 16px;
     cursor: pointer;
     border: none;
-    background-color: #007bff;
+    background-color: maroon;
     color: white;
     border-radius: 5px;
 }
@@ -20,7 +21,7 @@
 }
 
 .pagination .active {
-    background-color: #0056b3;
+    background-color: #800000;
 }
 
 .toggle-unavailable-button {
@@ -41,33 +42,51 @@
 /* Grid layout for cards */
 .menu-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+    gap: 35px;
+    width: 100%;
+    padding: 25px;
+    justify-items: center;
 }
 
 /* Individual card styling */
 .menu-card {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-between; /* Changed to space-between to push content apart */
     align-items: center;
     border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    min-height: 350px; /* Constant height for all cards */
-    min-width: 15vw;
-    position: relative; /* Ensure proper positioning for buttons */
+    border-radius: 15px;
+    padding: 35px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+    min-height: 650px;
+    width: 600px;
+    position: relative;
+    background: white;
+    margin: 20px;
 }
 
 /* Styling for card images */
 .menu-card img {
-    max-width: 100%;
-    height: 150px; /* Fixed height for consistency */
-    object-fit: cover; /* Prevent image distortion */
-    margin-bottom: 10px;
-    border-radius: 8px;
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    margin-bottom: 30px;
+    border-radius: 12px;
+}
+
+.menu-card h3 {
+    margin: 20px 0;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.menu-card p {
+    margin: 12px 0;
+    text-align: center;
+    font-size: 1.4rem;
+    color: #666;
 }
 
 /* Hover effect for cards */
@@ -83,15 +102,43 @@
 
 /* Button container to align buttons at the bottom */
 .menu-card .button-container {
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    width: 100%;
-    position: absolute;
-    bottom: 15px; /* Ensures buttons are always at the bottom */
-    left: 15px; /* Aligns with card padding */
+    gap: 15px;
+    margin-top: 15px; /* Add some space between content and buttons */
+    position: static; /* Remove absolute positioning */
 }
 
 /* Styling for individual buttons */
+.menu-card .button-container button {
+    flex: 1;
+    padding: 10px 15px;
+    background-color: maroon;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0; /* Remove default button margins */
+}
+
+.menu-card .button-container button:first-child {
+    background-color: #2196F3;
+}
+
+.menu-card .button-container button:last-child {
+    background-color: #DC3545;
+}
+
+.menu-card .button-container button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
 .menu-card button {
     background-color: #007bff;
     color: white;
@@ -151,6 +198,9 @@ h3 {
     border-radius: 8px;
     scrollbar-width: thin;
     scrollbar-color: maroon #f2f2f2;
+    flex-grow: 1;
+    flex-direction: column;
+    align-items: center;
 }
 
 .menu-container::-webkit-scrollbar {
@@ -176,7 +226,7 @@ h3 {
     padding: 20px;
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 5px;
     justify-content: center;
     max-width: 1200px;
     margin: 0 auto;
@@ -205,11 +255,192 @@ h3 {
     border-radius: 8px;
 }
 
+/* Add order-summary styles for the form */
+.order-summary {
+    max-height: 95vh;
+    overflow-y: auto;
+    margin: 30px;
+    padding: 35px;
+    border-radius: 12px;
+    width: 600px;
+    min-width: 550px;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.1), -4px -4px 12px rgba(255, 255, 255, 0.6);
+}
+
+.order-summary h2 {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+    font-weight: bold;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eaeaea;
+}
+
+.order-summary form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.order-summary .MuiTextField-root,
+.order-summary .MuiFormControl-root {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin: 8px 0;
+    font-size: 1rem;
+}
+
+.order-summary .MuiTextField-root .MuiOutlinedInput-root,
+.order-summary .MuiFormControl-root .MuiOutlinedInput-root {
+    border-radius: 8px;
+}
+
+.order-summary .MuiInputLabel-root {
+    color: #555;
+    font-weight: 500;
+}
+
+.order-summary .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: maroon;
+}
+
+.order-summary .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: maroon;
+    border-width: 2px;
+}
+
+.order-summary .buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    gap: 20px;
+}
+
+.order-summary .buttons button {
+    flex: 1;
+    padding: 15px 25px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.order-summary .buttons button[type="submit"] {
+    background-color: maroon;
+    color: white;
+}
+
+.order-summary .buttons button[type="submit"]:hover {
+    background-color: #600000;
+    box-shadow: 0 4px 8px rgba(128, 0, 0, 0.2);
+}
+
+.order-summary .buttons button[type="button"] {
+    background-color: #666;
+    color: white;
+}
+
+.order-summary .buttons button[type="button"]:hover {
+    background-color: #555;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Custom scrollbar for order summary */
+.order-summary::-webkit-scrollbar {
+    width: 8px;
+}
+
+.order-summary::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.order-summary::-webkit-scrollbar-thumb {
+    background: maroon;
+    border-radius: 4px;
+}
+
+.order-summary::-webkit-scrollbar-thumb:hover {
+    background: #600000;
+}
+
+/* Add nav-sidebar styles */
+.nav-sidebar {
+    width: 250px;
+    background-color: #f8f8f8;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-sidebar button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    align-items: center;
+    padding: 10px;
+    margin: 5px;
+    border: 2px solid transparent;
+    background-color: transparent;
+    cursor: pointer;
+    transition: transform 0.3s ease, border-color 0.3s, background-color 0.3s, box-shadow 0.3s;
+}
+
+.nav-sidebar button:hover {
+    transform: scale(1.1);
+    border-color: #FFD700;
+    background-color: #FFF5E1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.nav-sidebar button:active {
+    background-color: #FFDB8D;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.nav-sidebar button:focus {
+    outline: none;
+}
+
+/* Add button-content styles */
+.button-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Add category-icon styles */
+.category-icon {
+    width: 50px;
+    height: 65px;
+    object-fit: cover;
+}
+
+.category-icon img {
+    width: 200%;
+}
+
+/* Add category-text styles */
+.category-text {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #333333;
+}
 
 /* Responsive styling */
 @media (max-width: 768px) {
     .menu-card {
-        width: calc(50% - 20px);
+        width: calc(100% - 50px);
+        min-height: 700px;
     }
 }
 

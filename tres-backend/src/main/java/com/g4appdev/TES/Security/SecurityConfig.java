@@ -41,7 +41,10 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/staffauth/login", "/staffauth/register", "/staffauth/ping").permitAll()
                 .requestMatchers("/tes/menu/**").permitAll()
-                .requestMatchers("/staffauth/all").authenticated()  // Changed to just authenticated
+                .requestMatchers("/api/orders/**").permitAll()
+                .requestMatchers("/api/payments/**").permitAll()
+                .requestMatchers("/feedback/**").permitAll()  // Add this line
+                .requestMatchers("/staffauth/all").authenticated()
                 .anyRequest().authenticated()
             )
             .exceptionHandling(ex -> ex

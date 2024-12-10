@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
+@Table(name = "order_entity")
 public class OrderEntity {
 
     @Id
@@ -12,11 +13,11 @@ public class OrderEntity {
     @Column(name = "orderId")
     private Integer orderId;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "orderDate")
+    @Column(name = "order_date", columnDefinition = "DATE DEFAULT (CURRENT_DATE)", nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date orderDate;
 
-    @Column(name = "orderTime")
+    @Column(name = "order_time", columnDefinition = "VARCHAR(8) DEFAULT (TIME_FORMAT(CURRENT_TIME, '%H:%i:%s'))", nullable = false)
     private String orderTime;
 
     @Column(name = "totalAmount")
@@ -81,11 +82,12 @@ public class OrderEntity {
 
     @PrePersist
     protected void onCreate() {
+        Date now = new Date();
         if (orderDate == null) {
-            orderDate = new Date(); // Set current date if not provided
+            orderDate = now;
         }
-        if (orderTime == null) {
-            orderTime = new SimpleDateFormat("HH:mm:ss").format(new Date());
+        if (orderTime == null || orderTime.isEmpty()) {
+            orderTime = new SimpleDateFormat("HH:mm:ss").format(now);
         }
     }
 }

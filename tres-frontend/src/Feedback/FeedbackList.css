@@ -1,4 +1,3 @@
-
 .feedback-list-container {
   width: 80%;
   margin: 0 auto;
@@ -60,4 +59,31 @@ td {
 
 .feedback-list-container table tr:hover {
   background-color: #ddd;
+}
+
+.MuiTableRow-root:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.MuiTableCell-root {
+  padding: 16px;
+}
+
+.MuiButton-contained {
+  text-transform: none;
+}
+
+.feedback-container {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

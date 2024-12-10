@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../services/AuthService';
 import './MenuItem.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { TextField, FormControl, InputLabel, Select, MenuItem as MuiMenuItem } from '@mui/material';
@@ -32,19 +32,25 @@ const Menuitem = () => {
 
     const fetchMenuItems = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/tes/menu/getAllMenu');
+            const response = await axiosInstance.get('/tes/menu/getAllMenu');
             setMenuItems(response.data);
         } catch (error) {
             console.error('Error fetching menu items:', error);
+            if (error.response?.status === 403) {
+                navigate('/Staff/staff'); // Redirect to login if unauthorized
+            }
         }
     };
 
     const fetchUnavailableItems = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/tes/menu/getUnavailableMenu');
+            const response = await axiosInstance.get('/tes/menu/getUnavailableMenu');
             setUnavailableItems(response.data);
         } catch (error) {
             console.error('Error fetching unavailable items:', error);
+            if (error.response?.status === 403) {
+                navigate('/Staff/staff');
+            }
         }
     };
 
@@ -69,17 +75,20 @@ const Menuitem = () => {
     
         try {
             if (editingItem) {
-                await axios.put(
-                    `http://localhost:8080/tes/menu/putMenuitemDetails/${editingItem.menu_id}`,
+                await axiosInstance.put(
+                    `/tes/menu/putMenuitemDetails/${editingItem.menu_id}`,
                     formItem
                 );
             } else {
-                await axios.post('http://localhost:8080/tes/menu/insertMenu', formItem);
+                await axiosInstance.post('/tes/menu/insertMenu', formItem);
             }
             fetchMenuItems();
             resetForm();
         } catch (error) {
             console.error('Error submitting the form:', error);
+            if (error.response?.status === 403) {
+                navigate('/Staff/staff');
+            }
         }
     };
     
@@ -93,10 +102,13 @@ const Menuitem = () => {
 
     const handleDelete = async (menu_id) => {
         try {
-            await axios.delete(`http://localhost:8080/tes/menu/deleteMenuitem/${menu_id}`);
+            await axiosInstance.delete(`/tes/menu/deleteMenuitem/${menu_id}`);
             fetchMenuItems();
         } catch (error) {
             console.error('Error deleting menu item:', error);
+            if (error.response?.status === 403) {
+                navigate('/Staff/staff');
+            }
         }
     };
 
@@ -127,11 +139,19 @@ const Menuitem = () => {
 
     const handleViewStaffDashboard = () => {
         const token = localStorage.getItem('token');
-        if (token) {
-            navigate('/Staff/staffdashboard');
-        } else {
-            navigate('/Staff/staff');
+        if (!token) {
+            navigate('/Staff/staff'); // Redirect to login if no token
+            return;
         }
+        navigate('/Staff/StaffDashboard');
+    };
+
+    const handleViewAnalytics = () => {
+        navigate('/MenuItem/MenuitemAnalytics');
+    };
+
+    const handleViewFeedback = () => {
+        navigate('/Feedback/feedbacklist');
     };
 
     return (
@@ -145,22 +165,24 @@ const Menuitem = () => {
                                 <span className="category-text">All Items</span>
                             </div>
                         </button>
-                        <button>
-                            <div className="button-content">
-                                <img src="https://cdn-icons-png.flaticon.com/512/4497/4497535.png" alt="Add" className="category-icon" />
-                                <span className="category-text">Add New Item</span>
-                            </div>
-                        </button>
-                        <button>
-                            <div className="button-content">
-                                <img src="https://cdn0.iconfinder.com/data/icons/essentials-marketing-2-1/128/block-disable-unavailable-ban-512.png" alt="Unavailable" className="category-icon" />
-                                <span className="category-text">Unavailable Items</span>
-                            </div>
-                        </button>
+                        
+                        
                         <button onClick={handleViewStaffDashboard}>
                             <div className="button-content">
                                 <img src="https://www.creativefabrica.com/wp-content/uploads/2021/04/17/Dashboard-SVG-Typography-Graphics-10986754-1.png" alt="Staff" className="category-icon" />
                                 <span className="category-text">Staff Dashboard</span>
+                            </div>
+                        </button>
+                        <button onClick={handleViewAnalytics}>
+                            <div className="button-content">
+                                <img src="https://ioe.engin.umich.edu/wp-content/uploads/sites/7/2021/06/RESIZED_IOE-Masters_-Data-Analytics-and-Applied-Statistics.jpg" alt="Analytics" className="category-icon" />
+                                <span className="category-text">Data Analytics</span>
+                            </div>
+                        </button>
+                        <button onClick={handleViewFeedback}>
+                            <div className="button-content">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRio5nT_HZzNZhjpVd_GQtyd_aEUbaxw5g9gQ&s" alt="Staff" className="category-icon" />
+                                <span className="category-text">Feedback list</span>
                             </div>
                         </button>
                     </div>

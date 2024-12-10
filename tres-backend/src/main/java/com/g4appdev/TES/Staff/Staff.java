@@ -9,6 +9,10 @@ import java.util.Date;
 
 @Entity
 public class Staff {
+    public enum StaffRole {
+        ADMIN, STAFF
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "staff_id") // Update column name to staff_id
@@ -17,15 +21,18 @@ public class Staff {
     @NotBlank
     private String name;
 
+    @Column(unique = true)
     @Email
-    @NotBlank
+    @NotBlank(message = "Email is required")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "Password is required")
+    @Column(nullable = false)
     private String password;
 
     @NotBlank
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private StaffRole role;
 
     @Pattern(regexp = "^[0-9]{11}$")
     private String contactNumber;
@@ -39,7 +46,7 @@ public class Staff {
     public Staff(int id, String name, String role, String contactNumber, Date schedule) {
         this.staffId = id;
         this.name = name;
-        this.role = role;
+        this.role = StaffRole.valueOf(role.toUpperCase());
         this.contactNumber = contactNumber;
         this.schedule = schedule;
     }
@@ -60,12 +67,12 @@ public class Staff {
         this.name = name;
     }
 
-    public String getRole() {
+    public StaffRole getRole() {
         return role;
     }
 
     public void setRole(String role) {
-        this.role = role;
+        this.role = StaffRole.valueOf(role.toUpperCase());
     }
 
     public String getContactNumber() {

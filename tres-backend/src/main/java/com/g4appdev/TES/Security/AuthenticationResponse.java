@@ -1,14 +1,30 @@
-
 package com.g4appdev.TES.Security;
 
-public class AuthenticationResponse {
-    private final String token;
+import com.g4appdev.TES.Staff.Staff; // Ensure that the Staff class is in the correct package
 
-    public AuthenticationResponse(String token) {
+public class AuthenticationResponse {
+    private String token;
+    private Staff staff;
+
+    public AuthenticationResponse(String token, Staff staff) {
+        this.token = token;
+        this.staff = staff;
+    }
+
+    // Add getters and setters
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
         this.token = token;
     }
 
-    public String getToken() {
-        return token;
+    public Staff getStaff() {
+        return staff;
+    }
+
+    public void setStaff(Staff staff) {
+        this.staff = staff;
     }
 }

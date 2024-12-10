@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Box, TextField, Typography, Button, Tab, Tabs } from '@mui/material';
+import { Box, TextField, Typography, Button, Tab, Tabs, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import './Staff.css';
 
 const Staff = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [formData, setFormData] = useState({
-    id: '', // Added id field
     email: '',
     password: '',
     name: '',
@@ -36,14 +35,20 @@ const Staff = () => {
       const response = await axios.post('http://localhost:8080/staffauth/login', {
         email: formData.email,
         password: formData.password
-      }, {
-        headers: {
-          'Accept': 'application/json'
-        }
       });
       
-      localStorage.setItem('token', response.data.token);
-      navigate('/MenuItem/menuitem');
+      if (response.data.token) {
+        const token = response.data.token;
+        localStorage.setItem('token', token);
+        localStorage.setItem('staffInfo', JSON.stringify(response.data.staff));
+        
+        // Set default authorization header for all future requests
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        
+        navigate('/MenuItem/menuitem');
+      } else {
+        setError('Login failed - Invalid response from server');
+      }
     } catch (error) {
       setError('Invalid email or password');
     }
@@ -52,14 +57,33 @@ const Staff = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8080/staffauth/register', formData, {
-        headers: {
-          'Accept': 'application/json'
-        }
+      // Validate password
+      if (formData.password.length < 6) {
+        setError('Password must be at least 6 characters long');
+        return;
+      }
+
+      const response = await axios.post('http://localhost:8080/staffauth/register', {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        role: formData.role,
+        contactNumber: formData.contactNumber,
+        schedule: formData.schedule
       });
-      setActiveTab(0);
-      setError('Registration successful. Please login.');
-      navigate('/MenuItem/menuitem');
+
+      if (response.data) {
+        setActiveTab(0);
+        setError('Registration successful. Please login.');
+        setFormData({
+          email: '',
+          password: '',
+          name: '',
+          role: '',
+          contactNumber: '',
+          schedule: ''
+        });
+      }
     } catch (error) {
       setError(error.response?.data?.message || 'Registration failed');
     }
@@ -131,14 +155,6 @@ const Staff = () => {
           <Box display="flex" flexDirection="column" gap={2}>
             <TextField
               className="form-field"
-              name="id"
-              label="ID"
-              value={formData.id}
-              onChange={handleChange}
-              required
-            />
-            <TextField
-              className="form-field"
               name="email"
               label="Email"
               type="email"
@@ -163,14 +179,20 @@ const Staff = () => {
               onChange={handleChange}
               required
             />
-            <TextField
-              className="form-field"
-              name="role"
-              label="Role"
-              value={formData.role}
-              onChange={handleChange}
-              required
-            />
+            <FormControl fullWidth className="form-field">
+              <InputLabel id="role-label">Role</InputLabel>
+              <Select
+                labelId="role-label"
+                name="role"
+                value={formData.role}
+                label="Role"
+                onChange={handleChange}
+                required
+              >
+                <MenuItem value="STAFF">Staff</MenuItem>
+                <MenuItem value="ADMIN">Admin</MenuItem>
+              </Select>
+            </FormControl>
             <TextField
               className="form-field"
               name="contactNumber"

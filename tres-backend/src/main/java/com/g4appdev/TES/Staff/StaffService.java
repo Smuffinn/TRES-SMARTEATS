@@ -14,11 +14,13 @@ public class StaffService {
 
     private static final Logger logger = LoggerFactory.getLogger(StaffService.class);
 
-    @Autowired
-    private StaffRepository staffRepository;
+    private final StaffRepository staffRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public StaffService(StaffRepository staffRepository, PasswordEncoder passwordEncoder) {
+        this.staffRepository = staffRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public Staff registerStaff(Staff staff) {
         try {
@@ -40,8 +42,14 @@ public class StaffService {
             staff.setPassword(passwordEncoder.encode(staff.getPassword()));
             
             // Set default role if empty
-            if (!StringUtils.hasText(staff.getRole())) {
+            if (!StringUtils.hasText(staff.getRole().toString())) {
                 staff.setRole("STAFF");
+            }
+
+            // Validate role
+            if (!staff.getRole().toString().equals("ADMIN") && 
+                !staff.getRole().toString().equals("STAFF")) {
+                throw new IllegalArgumentException("Invalid role. Must be either ADMIN or STAFF");
             }
 
             Staff savedStaff = staffRepository.save(staff);

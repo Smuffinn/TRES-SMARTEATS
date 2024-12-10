@@ -62,18 +62,18 @@ const App = () => {
           <Link to="/" className="logo-container">
             <img src={logo1} alt="CITU - SMART EATS Logo" className="logo" />
           </Link>
-          <Link to="/MenuItem/menuitem" className={isActive('/MenuItem/menuitem') ? 'active' : ''}>Menu Item</Link>
+          {/* <Link to="/MenuItem/menuitem" className={isActive('/MenuItem/menuitem') ? 'active' : ''}>Menu Item</Link>
           <Link to="/Inventory/inventory" className={isActive('/Inventory/inventory') ? 'active' : ''}>Inventory</Link>
           <Link to="/Payment/payment" className={isActive('/Payment/payment') ? 'active' : ''}>Payment</Link>
           <Link to="/Staff/staff" className={isActive('/Staff/staff') ? 'active' : ''}>Staffs</Link>
           {/* <Link to="/Student/student" className={isActive('/Student/student') ? 'active' : ''}>Student</Link> */}
-          <Link to="/Order/order" className={isActive('/Order/order') ? 'active' : ''}>Order</Link>
+          {/* <Link to="/Order/order" className={isActive('/Order/order') ? 'active' : ''}>Order</Link>
           <Link to="/about" className={isActive('/about') ? 'active' : ''}>About Us</Link>
-          {/* <Link to="/accountsettings" className={isActive('/accountsettings') ? 'active' : ''}>Account Settings</Link> */}
-          <Link to="/Feedback/feedback" className={isActive('/Feedback/feedback') ? 'active' : ''}>Feedback</Link>
+          <Link to="/accountsettings" className={isActive('/accountsettings') ? 'active' : ''}>Account Settings</Link> */}
+          {/* <Link to="/Feedback/feedback" className={isActive('/Feedback/feedback') ? 'active' : ''}>Feedback</Link>
           <Link to="/MenuItem/MenuitemAnalytics" className={isActive('/MenuItem/MenuitemAnalytics') ? 'active' : ''}>Data Analytics</Link>
           {/* <Link to="/stock" className={isActive('/stock') ? 'active' : ''}>Stock Overview</Link> */}
-          {/* <Link to="/mainmenu" className={isActive('/mainmenu') ? 'active' : ''}>Main Menu</Link> */}
+          {/* <Link to="/mainmenu" className={isActive('/mainmenu') ? 'active' : ''}>Main Menu</Link> */} 
 
         </nav> 
       )}
@@ -93,7 +93,7 @@ const App = () => {
         <Route path="/Payment/payment" element={<Payment paymentData={paymentData} setPaymentData={setPaymentData} />} />
         <Route path="/Payment/payment-list" element={<PaymentList payments={paymentData} />} />
         <Route path="/Staff/staff" element={<Staff />} />
-        <Route path="/Staff/dashboard" element={
+        <Route path="/Staff/StaffDashboard" element={  // Updated path to match navigation
           <PrivateRoute>
             <StaffDashboard />
           </PrivateRoute>

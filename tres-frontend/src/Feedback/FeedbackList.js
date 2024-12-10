@@ -1,10 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './FeedbackList.css';
+import {
+  Box,
+  Typography,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  IconButton,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Tooltip,
+  CircularProgress,
+  Alert
+} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const FeedbackList = () => {
   const [feedbackList, setFeedbackList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [selectedFeedback, setSelectedFeedback] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,60 +39,147 @@ const FeedbackList = () => {
 
   const fetchFeedbacks = async () => {
     try {
+      setLoading(true);
       const response = await axios.get('http://localhost:8080/feedback/getAll');
       setFeedbackList(response.data);
+      setError(null);
     } catch (error) {
       console.error('Error fetching feedbacks:', error);
+      setError('Failed to load feedback. Please try again later.');
+    } finally {
+      setLoading(false);
     }
   };
 
-  const editFeedback = (feedback) => {
+  const handleEdit = (feedback) => {
     navigate('/Feedback/feedback', { state: { feedback } });
   };
 
-  const deleteFeedback = async (feedbackId) => {
+  const handleDeleteClick = (feedback) => {
+    setSelectedFeedback(feedback);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
     try {
-      await axios.delete(`http://localhost:8080/feedback/delete/${feedbackId}`);
-      fetchFeedbacks();
+      await axios.delete(`http://localhost:8080/feedback/delete/${selectedFeedback.feedbackId}`);
+      await fetchFeedbacks();
+      setDeleteDialogOpen(false);
     } catch (error) {
       console.error('Error deleting feedback:', error);
+      setError('Failed to delete feedback. Please try again.');
     }
   };
 
-  const getRandomColor = () => {
-    const colors = ['#FFCDD2', '#F8BBD0', '#E1BEE7', '#D1C4E9', '#C5CAE9', '#BBDEFB', '#B3E5FC', '#B2EBF2', '#B2DFDB', '#C8E6C9', '#DCEDC8', '#F0F4C3', '#FFECB3', '#FFE0B2', '#FFCCBC', '#D7CCC8', '#F5F5F5', '#CFD8DC'];
-    return colors[Math.floor(Math.random() * colors.length)];
+  const handleBackToMenu = () => {
+    navigate('/MenuItem/menuitem');
   };
 
   return (
-    <div className="feedback-list-container">
-      <h1>Feedback List</h1>
-      <table className="feedback-table">
-        <thead>
-          <tr>
-            <th className="header-cell">Feedback ID</th>
-            <th className="header-cell">Name</th>
-            <th className="header-cell">Email</th>
-            <th className="header-cell">Message</th>
-            <th className="header-cell">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {feedbackList.map(feedback => (
-            <tr key={feedback.feedbackId} style={{ backgroundColor: getRandomColor() }}>
-              <td>{feedback.feedbackId}</td>
-              <td>{feedback.firstName} {feedback.lastName}</td>
-              <td>{feedback.email}</td>
-              <td>{feedback.message}</td>
-              <td>
-                <button onClick={() => editFeedback(feedback)}>Edit</button>
-                <button onClick={() => deleteFeedback(feedback.feedbackId)}>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <Box sx={{ 
+      p: 3,
+      maxWidth: 1200,
+      margin: '0 auto',
+      minHeight: '100vh',
+      backgroundColor: '#f5f5f5'
+    }}>
+      <Paper elevation={3} sx={{ p: 3, backgroundColor: 'white' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+          <Typography variant="h4" component="h1" gutterBottom>
+            Feedback Management
+          </Typography>
+          <Button
+            startIcon={<ArrowBackIcon />}
+            variant="contained"
+            onClick={handleBackToMenu}
+            sx={{ 
+              backgroundColor: '#8B0000',
+              '&:hover': {
+                backgroundColor: '#620000',
+              }
+            }}
+          >
+            Back to Menu
+          </Button>
+        </Box>
+
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
+
+        {loading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <TableContainer component={Paper} sx={{ boxShadow: 3 }}>
+            <Table>
+              <TableHead>
+                <TableRow sx={{ backgroundColor: '#8B0000' }}>
+                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>ID</TableCell>
+                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Name</TableCell>
+                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Email</TableCell>
+                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Message</TableCell>
+                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {feedbackList.map((feedback) => (
+                  <TableRow 
+                    key={feedback.feedbackId}
+                    sx={{ 
+                      '&:hover': { 
+                        backgroundColor: '#f5f5f5',
+                        transition: 'background-color 0.3s'
+                      }
+                    }}
+                  >
+                    <TableCell>{feedback.feedbackId}</TableCell>
+                    <TableCell>{`${feedback.firstName} ${feedback.lastName}`}</TableCell>
+                    <TableCell>{feedback.email}</TableCell>
+                    <TableCell>{feedback.message}</TableCell>
+                    <TableCell>
+                      <Tooltip title="Edit Feedback">
+                        <IconButton 
+                          onClick={() => handleEdit(feedback)}
+                          sx={{ color: '#1976d2' }}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Delete Feedback">
+                        <IconButton 
+                          onClick={() => handleDeleteClick(feedback)}
+                          sx={{ color: '#d32f2f' }}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
+      </Paper>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
+        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogContent>
+          Are you sure you want to delete this feedback?
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
+          <Button onClick={handleDeleteConfirm} color="error" variant="contained">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 };
 

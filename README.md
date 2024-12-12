@@ -57,6 +57,35 @@ The backend is built using Spring Boot and is located in the `tres-backend` dire
 
 The frontend is built using React and is located in the `tres-frontend` directory. It provides the user interface for interacting with the platform.
 
+## Features
+
+Features
+• Registration
+-Users can create an account to personalize their experience.
+
+• Log in/Log out
+-Secure access for users to manage their accounts.
+
+• Account Settings
+-Allows users to update their personal information and preferences.
+
+• Self-service Ordering Kiosk
+- A digital interface where students can browse the menu, customize their
+orders, and pay directly.
+
+• Inventory Management
+- A system that tracks stock levels in real-time and alerts staff when items are
+low.
+
+• Dashboard Analytics
+- A visual dashboard providing insights into sales trends, peak ordering times,
+and popular items.
+
+• Feedback System
+- A mechanism for students to provide feedback on menu items and overall
+service.
+
+
 ## Team Members
 
 - **Jenette Ephan**  

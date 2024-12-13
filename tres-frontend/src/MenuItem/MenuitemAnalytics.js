@@ -20,31 +20,13 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
 
 const MenuItemAnalytics = () => {
-  const [items, setItems] = useState([
-    { name: 'Burger', stock: 20, sales: 100 },
-    { name: 'Pizza', stock: 5, sales: 200 },
-    { name: 'Soda', stock: 50, sales: 300 },
-    { name: 'Fries', stock: 10, sales: 150 },
-  ]);
-
-  const [stockData, setStockData] = useState([
-    { date: '2024-11-01', stock: 50 },
-    { date: '2024-11-02', stock: 45 },
-    { date: '2024-11-03', stock: 40 },
-  ]);
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
-    // Simulate real-time updates
-    const interval = setInterval(() => {
-      setItems((prevItems) =>
-        prevItems.map((item) => ({
-          ...item,
-          stock: item.stock - Math.floor(Math.random() * 5),
-        }))
-      );
-    }, 5000); // Updates every 5 seconds
-
-    return () => clearInterval(interval); // Clean up on component unmount
+    fetch('http://localhost:8080/tes/menu/getAllMenu')
+      .then((response) => response.json())
+      .then((data) => setItems(data))
+      .catch((error) => console.error('Error fetching menu items:', error));
   }, []);
 
   const navigate = useNavigate();
@@ -113,7 +95,7 @@ const MenuItemAnalytics = () => {
                       sx={{ 
                         mb: 2, 
                         p: 2, 
-                        bgcolor: '#f8f8f8', 
+                        bgcolor: item.quantity <= 5 ? '#ffe6e6' : '#e6ffe6', 
                         borderRadius: 1,
                         display: 'flex',
                         justifyContent: 'space-between',
@@ -121,11 +103,11 @@ const MenuItemAnalytics = () => {
                       }}
                     >
                       <Typography variant="body1">
-                        <strong>{item.name}</strong>: {item.stock} units
+                        <strong>{item.item_name}</strong>: {item.quantity} units
                       </Typography>
                       <Chip
-                        label={item.stock < 10 ? 'Low Stock' : 'In Stock'}
-                        color={item.stock < 10 ? 'error' : 'success'}
+                        label={item.quantity <= 5 ? 'Low Stock' : 'In Stock'}
+                        color={item.quantity <= 5 ? 'error' : 'success'}
                         size="small"
                       />
                     </Box>
@@ -145,7 +127,7 @@ const MenuItemAnalytics = () => {
                 </Box>
                 <Box sx={{ height: 300 }}>
                   <ResponsiveContainer>
-                    <LineChart data={stockData}>
+                    <LineChart data={[] /* Replace with actual data */}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="date" />
                       <YAxis />
@@ -165,17 +147,17 @@ const MenuItemAnalytics = () => {
               <CardContent>
                 <Box sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
                   <EqualizerIcon sx={{ mr: 1, color: '#8B0000' }} />
-                  <Typography variant="h6">Top Selling Items</Typography>
+                  <Typography variant="h6">Stock Visualization</Typography>
                 </Box>
                 <Box sx={{ height: 300 }}>
                   <ResponsiveContainer>
                     <BarChart data={items}>
                       <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" />
+                      <XAxis dataKey="item_name" />
                       <YAxis />
                       <Tooltip />
                       <Legend />
-                      <Bar dataKey="sales" fill="#8B0000" />
+                      <Bar dataKey="quantity" fill="#8B0000" />
                     </BarChart>
                   </ResponsiveContainer>
                 </Box>
@@ -192,7 +174,7 @@ const MenuItemAnalytics = () => {
                   <Typography variant="h6">Stock Alerts</Typography>
                 </Box>
                 <Box sx={{ maxHeight: 300, overflow: 'auto' }}>
-                  {items.filter(item => item.stock < 10).map((item, index) => (
+                  {items.filter(item => item.quantity <= 5).map((item, index) => (
                     <Box 
                       key={index}
                       sx={{ 
@@ -204,7 +186,7 @@ const MenuItemAnalytics = () => {
                       }}
                     >
                       <Typography color="error">
-                        Alert: {item.name} is running low! ({item.stock} units remaining)
+                        Alert: {item.item_name} is running low! ({item.quantity} units remaining)
                       </Typography>
                     </Box>
                   ))}

@@ -154,6 +154,9 @@ const Menuitem = () => {
         navigate('/Feedback/feedbacklist');
     };
 
+    const handleViewOrder = () => {
+        navigate('/Order/order-list');
+    };
     return (
         <div className="contain">
             <div className="main">  
@@ -183,6 +186,12 @@ const Menuitem = () => {
                             <div className="button-content">
                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRio5nT_HZzNZhjpVd_GQtyd_aEUbaxw5g9gQ&s" alt="Staff" className="category-icon" />
                                 <span className="category-text">Feedback list</span>
+                            </div>
+                        </button>
+                        <button onClick={handleViewOrder}>
+                            <div className="button-content">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqx1vBJZyFv7QughFzI0y5Ht2gvl1MmIhc-A&s" alt="Staff" className="category-icon" />
+                                <span className="category-text">Orders</span>
                             </div>
                         </button>
                     </div>
